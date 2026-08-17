@@ -44,7 +44,7 @@ export function Hero() {
     }
 
     const timers: ReturnType<typeof setTimeout>[] = [];
-    let t = 600; // Start delay
+    let t = 240; // Start delay
 
     LOG_LINES.forEach((_, i) => {
       // Show line in "loading" state (spinner spinning)
@@ -60,7 +60,7 @@ export function Hero() {
       );
 
       // After "processing", switch to "active" (check mark appears)
-      const processingTime = i === LOG_LINES.length - 1 ? 1200 : 600 + Math.random() * 300;
+      const processingTime = i === LOG_LINES.length - 1 ? 510 : 240 + Math.random() * 120;
       timers.push(
         setTimeout(() => {
           setLineStates((prev) => {
@@ -77,7 +77,7 @@ export function Hero() {
         }, t + processingTime)
       );
 
-      t += processingTime + 200; // Gap between stages
+      t += processingTime + 80; // Gap between stages
     });
 
     // Hide cursor + last line done
@@ -89,13 +89,13 @@ export function Hero() {
           next[next.length - 1] = "done";
           return next;
         });
-      }, t + 500)
+      }, t + 210)
     );
 
     // Reveal headline, tracker, CTAs
-    timers.push(setTimeout(() => setHeadlineVisible(true), t + 700));
-    timers.push(setTimeout(() => setTrackerVisible(true), t + 1300));
-    timers.push(setTimeout(() => setCtaVisible(true), t + 1700));
+    timers.push(setTimeout(() => setHeadlineVisible(true), t + 300));
+    timers.push(setTimeout(() => setTrackerVisible(true), t + 530));
+    timers.push(setTimeout(() => setCtaVisible(true), t + 720));
 
     return () => timers.forEach(clearTimeout);
   }, []);
@@ -208,7 +208,7 @@ export function Hero() {
               style={{ transitionDelay: "500ms" }}
             >
               <em className="not-italic text-cool">
-                <VectorText trigger={headlineVisible} delay={900} duration={1500}>dev fullstack</VectorText>
+                <VectorText trigger={headlineVisible} delay={900} duration={1500} hideCursor>dev fullstack</VectorText>
               </em>
               <VectorText trigger={headlineVisible} delay={900} duration={1500}>, JS & IA generativa.</VectorText>
             </span>
@@ -229,12 +229,11 @@ export function Hero() {
             }`}
             style={{ transitionDelay: "900ms" }}
           >
-            Construo interfaces ponta a ponta e, por trás delas, um{" "}
+            <VectorText trigger={headlineVisible} delay={1300} duration={1500} hideCursor>Construo interfaces ponta a ponta e, por trás delas, um </VectorText>
             <strong className="text-text font-medium">
-              pipeline de RAG próprio
+              <VectorText trigger={headlineVisible} delay={1300} duration={1500} hideCursor>pipeline de RAG próprio</VectorText>
             </strong>{" "}
-            — ingestão, chunking, embeddings e recuperação de contexto. Claude,
-            Cursor e Gemini fazem parte da rotina.
+            <VectorText trigger={headlineVisible} delay={1300} duration={1500}>— ingestão, chunking, embeddings e recuperação de contexto. Claude, Cursor e Gemini fazem parte da rotina.</VectorText>
           </p>
         </div>
 
@@ -300,7 +299,7 @@ export function Hero() {
             rel="noopener noreferrer"
             className="font-mono text-[12.5px] tracking-wide px-5 py-2.5 rounded-md border border-warm text-warm transition-all duration-200 hover:bg-warm/[0.08] hover:shadow-[0_0_20px_rgba(242,184,75,0.15)]"
           >
-            GitHub
+            <VectorText trigger={ctaVisible} delay={100}>GitHub</VectorText>
           </a>
           <a
             href="https://www.linkedin.com/in/rafael-chaves-souza-a856b524b/"
@@ -308,13 +307,13 @@ export function Hero() {
             rel="noopener noreferrer"
             className="font-mono text-[12.5px] tracking-wide px-5 py-2.5 rounded-md border border-border text-text transition-all duration-200 hover:border-cool hover:text-cool hover:bg-cool/[0.06] hover:shadow-[0_0_20px_rgba(94,234,212,0.1)]"
           >
-            LinkedIn
+            <VectorText trigger={ctaVisible} delay={200}>LinkedIn</VectorText>
           </a>
           <a
             href="mailto:rafael012chavess@gmail.com"
             className="font-mono text-[12.5px] tracking-wide px-5 py-2.5 rounded-md border border-border text-text transition-all duration-200 hover:border-cool hover:text-cool hover:bg-cool/[0.06] hover:shadow-[0_0_20px_rgba(94,234,212,0.1)]"
           >
-            Email
+            <VectorText trigger={ctaVisible} delay={300}>Email</VectorText>
           </a>
         </div>
       </div>

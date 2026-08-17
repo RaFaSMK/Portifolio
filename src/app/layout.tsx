@@ -52,6 +52,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
     <html
       lang="pt-BR"
       className={`${inter.variable} ${fraunces.variable} ${jetbrainsMono.variable}`}
+      data-scroll-behavior="smooth"
     >
       <body className="min-h-dvh flex flex-col antialiased">
         <Navbar />

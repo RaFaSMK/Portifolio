@@ -1,6 +1,8 @@
 "use client";
 
-import { useEffect, useRef, useState, type ReactNode } from "react";
+import { createContext, useEffect, useRef, useState, type ReactNode } from "react";
+
+export const RevealContext = createContext<boolean | undefined>(undefined);
 
 /**
  * Hook que observa um elemento e retorna true quando ele entra no viewport.
@@ -23,11 +25,21 @@ export function useScrollReveal(threshold = 0.15) {
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
-          setIsVisible(true);
+          // Garante que o navegador já pintou o estado "escondido" antes
+          // de virar visível. Sem isso, se o elemento já estiver perto da
+          // viewport no primeiro mount (ex: depois de um hot-reload que
+          // preserva a posição do scroll), o observer pode disparar quase
+          // instantaneamente e o browser funde os dois estados num único
+          // frame — a transição CSS nunca chega a rodar.
+          requestAnimationFrame(() => {
+            requestAnimationFrame(() => {
+              setIsVisible(true);
+            });
+          });
           observer.unobserve(el);
         }
       },
-      { threshold, rootMargin: "0px 0px -60px 0px" }
+      { threshold, rootMargin: "0px" }
     );
 
     observer.observe(el);
@@ -54,14 +66,15 @@ export function Reveal({
   return (
     <div
       ref={ref}
-      className={`transition-all duration-700 ease-out ${
-        isVisible
+      className={`transition-all duration-700 ease-out ${isVisible
           ? "opacity-100 translate-y-0"
-          : "opacity-0 translate-y-6"
-      } ${className}`}
+          : "opacity-0 translate-y-10"
+        } ${className}`}
       style={{ transitionDelay: `${delay}ms` }}
     >
-      {typeof children === "function" ? children(isVisible) : children}
+      <RevealContext.Provider value={isVisible}>
+        {typeof children === "function" ? children(isVisible) : children}
+      </RevealContext.Provider>
     </div>
   );
 }

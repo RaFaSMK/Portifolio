@@ -1,3 +1,5 @@
+import { VectorText } from "@/components/VectorText/VectorText";
+
 interface ProjectCardProps {
   name: string;
   description: string;
@@ -15,7 +17,7 @@ export function ProjectCard({ name, description, url, stack }: ProjectCardProps)
     >
       <div className="flex items-start justify-between gap-3 mb-3">
         <h3 className="font-medium text-[15px] text-text group-hover:text-cool transition-colors duration-200">
-          {name}
+          <VectorText duration={1000}>{name}</VectorText>
         </h3>
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -35,7 +37,7 @@ export function ProjectCard({ name, description, url, stack }: ProjectCardProps)
       </div>
 
       <p className="text-[13px] text-muted leading-relaxed mb-4 line-clamp-3">
-        {description}
+        <VectorText delay={150} duration={1200}>{description}</VectorText>
       </p>
 
       <div className="flex flex-wrap gap-1.5">

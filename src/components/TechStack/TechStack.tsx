@@ -86,7 +86,9 @@ export function TechStack() {
                         className="w-4 h-4"
                         loading="lazy"
                       />
-                      <span className="text-[13px]">{tech.name}</span>
+                      <span className="text-[13px]">
+                        <VectorText trigger={isVisible} delay={techIdx * 60 + 150}>{tech.name}</VectorText>
+                      </span>
                     </div>
                   ))}
                 </div>

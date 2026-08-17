@@ -12,15 +12,17 @@ export function AboutSection() {
           {(isVisible) => (
             <>
               <h2 className="font-display font-[560] text-2xl mb-4 text-text">
-                <VectorText trigger={isVisible}>Sobre Mim</VectorText>
+                <VectorText>Sobre Mim</VectorText>
               </h2>
               <p className="text-muted leading-relaxed text-[15px]">
-                Estudante do 6º semestre de Engenharia de Software e desenvolvedor Fullstack,
-                atuando ponta a ponta em interfaces (React/Next.js), APIs REST (Node.js/Express)
-                e banco de dados. Tenho interesse genuíno em IA generativa — construí um pipeline
-                de RAG próprio (LangChain, ChromaDB, embeddings e integração com LLMs) com apoio
-                de ferramentas de IA no fluxo de desenvolvimento. Claude, Cursor e Gemini fazem
-                parte da minha rotina diária de código.
+                <VectorText delay={150} duration={2000}>
+                  Estudante do 6º semestre de Engenharia de Software e desenvolvedor Fullstack,
+                  atuando ponta a ponta em interfaces (React/Next.js), APIs REST (Node.js/Express)
+                  e banco de dados. Tenho interesse genuíno em IA generativa — construí um pipeline
+                  de RAG próprio (LangChain, ChromaDB, embeddings e integração com LLMs) com apoio
+                  de ferramentas de IA no fluxo de desenvolvimento. Claude, Cursor e Gemini fazem
+                  parte da minha rotina diária de código.
+                </VectorText>
               </p>
             </>
           )}
@@ -88,12 +90,14 @@ function ExperienceItem({
           </div>
           <div>
             <span className="font-mono text-[11px] text-muted-dim tracking-wide">
-              {period}
+              <VectorText trigger={isVisible} delay={delay + 100}>{period}</VectorText>
             </span>
             <p className="text-[14px] font-medium text-text mt-0.5">
               <VectorText trigger={isVisible} delay={delay + 200}>{role}</VectorText>
             </p>
-            <p className="text-[12px] text-muted">{company}</p>
+            <p className="text-[12px] text-muted">
+              <VectorText trigger={isVisible} delay={delay + 300}>{company}</VectorText>
+            </p>
           </div>
         </div>
       )}

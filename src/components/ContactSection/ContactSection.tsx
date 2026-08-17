@@ -13,7 +13,7 @@ export function ContactSection() {
               <VectorText trigger={isVisible}>Contato</VectorText>
             </h2>
             <p className="text-muted text-[15px] mb-8">
-              Vamos conversar? Entre em contato por qualquer um dos canais abaixo.
+              <VectorText trigger={isVisible} delay={150} duration={1200}>Vamos conversar? Entre em contato por qualquer um dos canais abaixo.</VectorText>
             </p>
           </>
         )}
@@ -35,7 +35,7 @@ export function ContactSection() {
             href: "mailto:rafael012chavess@gmail.com",
           },
         ].map((link, i) => (
-          <Reveal key={link.label} delay={i * 100}>
+          <Reveal key={link.label} delay={i * 100 + 200}>
             <a
               href={link.href}
               target={link.href.startsWith("mailto") ? undefined : "_blank"}
@@ -46,7 +46,7 @@ export function ContactSection() {
                   : "border-border text-text hover:border-cool hover:text-cool hover:bg-cool/[0.06] hover:shadow-[0_0_20px_rgba(94,234,212,0.1)]"
               }`}
             >
-              {link.label}
+              <VectorText delay={i * 100 + 300}>{link.label}</VectorText>
             </a>
           </Reveal>
         ))}

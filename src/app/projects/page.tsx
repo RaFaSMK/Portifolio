@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import { ProjectCard } from "@/components/ProjectCard/ProjectCard";
+import { Reveal } from "@/components/ScrollReveal/ScrollReveal";
+import { VectorText } from "@/components/VectorText/VectorText";
 
 export const metadata: Metadata = {
   title: "Projetos",
@@ -57,13 +59,19 @@ export default function ProjectsPage() {
     <>
       {/* Header */}
       <section className="pt-16 pb-12 px-[6vw] max-w-6xl mx-auto">
-        <h1 className="font-display font-[560] text-[clamp(2rem,4vw,3rem)] leading-tight tracking-tight mb-4">
-          Projetos
-        </h1>
-        <p className="text-muted text-[15px] max-w-xl">
-          APIs, pipelines de IA, plataformas web e apps mobile — projetos que
-          mostram minha jornada como desenvolvedor.
-        </p>
+        <Reveal>
+          <>
+            <h1 className="font-display font-[560] text-[clamp(2rem,4vw,3rem)] leading-tight tracking-tight mb-4">
+              <VectorText>Projetos</VectorText>
+            </h1>
+            <p className="text-muted text-[15px] max-w-xl">
+              <VectorText delay={150} duration={1500}>
+                APIs, pipelines de IA, plataformas web e apps mobile — projetos que
+                mostram minha jornada como desenvolvedor.
+              </VectorText>
+            </p>
+          </>
+        </Reveal>
       </section>
 
       <div className="border-t border-border" />
@@ -71,8 +79,10 @@ export default function ProjectsPage() {
       {/* Grid */}
       <section className="py-16 px-[6vw] max-w-6xl mx-auto">
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {projects.map((project) => (
-            <ProjectCard key={project.name} {...project} />
+          {projects.map((project, i) => (
+            <Reveal key={project.name} delay={(i % 3) * 80}>
+              <ProjectCard {...project} />
+            </Reveal>
           ))}
         </div>
       </section>
