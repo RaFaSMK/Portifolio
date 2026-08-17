@@ -12,9 +12,14 @@ const LOG_LINES = [
 
 const TRACKER_ITEMS = ["ingest", "chunk", "embed", "retrieve", "generate"];
 
+type LineState = "hidden" | "loading" | "active" | "done";
+
 export function Hero() {
-  const [lineStates, setLineStates] = useState<Array<"hidden" | "active" | "done">>(
+  const [lineStates, setLineStates] = useState<LineState[]>(
     LOG_LINES.map(() => "hidden")
+  );
+  const [trackerLit, setTrackerLit] = useState<boolean[]>(
+    TRACKER_ITEMS.map(() => false)
   );
   const [cursorVisible, setCursorVisible] = useState(true);
   const [headlineVisible, setHeadlineVisible] = useState(false);
@@ -23,10 +28,13 @@ export function Hero() {
   const reducedMotion = useRef(false);
 
   useEffect(() => {
-    reducedMotion.current = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    reducedMotion.current = window.matchMedia(
+      "(prefers-reduced-motion: reduce)"
+    ).matches;
 
     if (reducedMotion.current) {
       setLineStates(LOG_LINES.map(() => "done"));
+      setTrackerLit(TRACKER_ITEMS.map(() => true));
       setCursorVisible(false);
       setHeadlineVisible(true);
       setTrackerVisible(true);
@@ -35,21 +43,40 @@ export function Hero() {
     }
 
     const timers: ReturnType<typeof setTimeout>[] = [];
-    let t = 300;
+    let t = 600; // Start delay
 
     LOG_LINES.forEach((_, i) => {
+      // Show line in "loading" state (spinner spinning)
       timers.push(
         setTimeout(() => {
           setLineStates((prev) => {
             const next = [...prev];
-            // Previous lines become "done"
             if (i > 0) next[i - 1] = "done";
-            next[i] = "active";
+            next[i] = "loading";
             return next;
           });
         }, t)
       );
-      t += 420;
+
+      // After "processing", switch to "active" (check mark appears)
+      const processingTime = i === LOG_LINES.length - 1 ? 1200 : 600 + Math.random() * 300;
+      timers.push(
+        setTimeout(() => {
+          setLineStates((prev) => {
+            const next = [...prev];
+            next[i] = "active";
+            return next;
+          });
+          // Light up tracker dot
+          setTrackerLit((prev) => {
+            const next = [...prev];
+            next[i] = true;
+            return next;
+          });
+        }, t + processingTime)
+      );
+
+      t += processingTime + 200; // Gap between stages
     });
 
     // Hide cursor + last line done
@@ -65,110 +92,209 @@ export function Hero() {
     );
 
     // Reveal headline, tracker, CTAs
-    timers.push(setTimeout(() => setHeadlineVisible(true), t + 650));
-    timers.push(setTimeout(() => setTrackerVisible(true), t + 1050));
-    timers.push(setTimeout(() => setCtaVisible(true), t + 1300));
+    timers.push(setTimeout(() => setHeadlineVisible(true), t + 700));
+    timers.push(setTimeout(() => setTrackerVisible(true), t + 1300));
+    timers.push(setTimeout(() => setCtaVisible(true), t + 1700));
 
     return () => timers.forEach(clearTimeout);
   }, []);
 
   return (
-    <section className="min-h-[calc(100dvh-78px)] flex items-center px-[6vw] py-[6vw]">
-      <div className="max-w-[720px]">
+    <section className="relative min-h-[calc(100dvh-78px)] flex items-center px-[6vw] py-[6vw] overflow-hidden">
+      {/* Ambient glow */}
+      <div
+        className="pointer-events-none absolute top-1/4 -left-32 w-[600px] h-[600px] rounded-full opacity-[0.05]"
+        style={{
+          background: "radial-gradient(circle, var(--cool) 0%, transparent 70%)",
+        }}
+      />
+
+      <div className="relative max-w-[720px] w-full">
         {/* Pipeline Log */}
-        <div className="font-mono text-[13px] min-h-[128px] mb-7" aria-live="polite">
-          {LOG_LINES.map((line, i) => (
-            <div
-              key={line.stage}
-              className={`flex gap-2.5 leading-[1.9] transition-all duration-400 ease-out ${
-                lineStates[i] === "hidden"
-                  ? "opacity-0 translate-y-1"
-                  : lineStates[i] === "active"
-                  ? "opacity-100 translate-y-0 text-cool"
-                  : "opacity-100 translate-y-0 text-muted"
-              }`}
-            >
-              <span className="w-[78px] shrink-0">{line.stage}</span>
-              <span>
-                {line.detail}
-                {i === LOG_LINES.length - 1 && cursorVisible && (
-                  <span
-                    className="inline-block w-[7px] h-[14px] bg-warm ml-0.5 align-[-2px] animate-[blink_1s_step-start_infinite]"
-                    aria-hidden="true"
-                  />
+        <div
+          className="font-mono text-[13px] min-h-[160px] mb-8"
+          role="log"
+          aria-live="polite"
+          aria-label="Pipeline RAG em execução"
+        >
+          {LOG_LINES.map((line, i) => {
+            const state = lineStates[i];
+            return (
+              <div
+                key={line.stage}
+                className={`flex items-center gap-3 h-[30px] transition-all duration-500 ease-out
+                  ${state === "hidden" ? "opacity-0 translate-y-2" : ""}
+                  ${state === "loading" ? "opacity-100 translate-y-0 text-muted-dim" : ""}
+                  ${state === "active" ? "opacity-100 translate-y-0 text-cool" : ""}
+                  ${state === "done" ? "opacity-100 translate-y-0 text-muted" : ""}
+                `}
+              >
+                {/* Status indicator */}
+                <span className="w-4 h-4 flex items-center justify-center shrink-0">
+                  {state === "loading" && (
+                    <span className="block w-3.5 h-3.5 border-[1.5px] border-muted-dim/40 border-t-cool rounded-full animate-[spin_0.6s_linear_infinite]" />
+                  )}
+                  {(state === "active" || state === "done") && (
+                    <svg
+                      width="14"
+                      height="14"
+                      viewBox="0 0 14 14"
+                      fill="none"
+                      className={`${state === "active" ? "text-cool" : "text-muted-dim"} ${state === "active" ? "animate-[scale-in_0.3s_ease-out]" : ""}`}
+                    >
+                      <path
+                        d="M2.5 7L5.5 10L11.5 4"
+                        stroke="currentColor"
+                        strokeWidth="1.5"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      />
+                    </svg>
+                  )}
+                </span>
+
+                <span className="w-[90px] shrink-0 whitespace-nowrap">{line.stage}</span>
+                <span className="whitespace-nowrap">
+                  {state === "loading" ? (
+                    <span className="inline-block animate-[typing-dots_1.4s_infinite]">...</span>
+                  ) : (
+                    line.detail
+                  )}
+                  {i === LOG_LINES.length - 1 && cursorVisible && state !== "loading" && (
+                    <span
+                      className="inline-block w-[7px] h-[14px] bg-warm ml-1 align-[-2px] animate-[blink_1s_step-start_infinite]"
+                      aria-hidden="true"
+                    />
+                  )}
+                </span>
+
+                {/* Active glow bar */}
+                {state === "active" && (
+                  <span className="ml-auto h-px w-20 animate-[glow-bar_1.5s_ease-out_forwards] bg-gradient-to-r from-cool/50 to-transparent" />
                 )}
-              </span>
-            </div>
-          ))}
+              </div>
+            );
+          })}
         </div>
 
         {/* Headline */}
         <div
-          className={`transition-all duration-700 ease-out ${
+          className={`transition-all duration-[1000ms] ease-out ${
             headlineVisible
               ? "opacity-100 translate-y-0"
-              : "opacity-0 translate-y-2.5"
+              : "opacity-0 translate-y-5"
           }`}
         >
           <h1 className="font-display font-[560] text-[clamp(2.6rem,6vw,4.4rem)] leading-[1.03] tracking-tight">
-            Rafael Souza —<br />
-            <em className="not-italic text-cool">dev fullstack</em>, JS &amp; IA generativa.
+            <span
+              className={`inline-block transition-all duration-[800ms] ease-out ${
+                headlineVisible
+                  ? "opacity-100 translate-x-0"
+                  : "opacity-0 -translate-x-6"
+              }`}
+              style={{ transitionDelay: "200ms" }}
+            >
+              Rafael Souza —
+            </span>
+            <br />
+            <span
+              className={`inline-block transition-all duration-[800ms] ease-out ${
+                headlineVisible
+                  ? "opacity-100 translate-x-0"
+                  : "opacity-0 -translate-x-6"
+              }`}
+              style={{ transitionDelay: "500ms" }}
+            >
+              <em className="not-italic text-cool">dev fullstack</em>, JS &amp;
+              IA generativa.
+            </span>
           </h1>
 
-          <p className="font-mono text-[14px] text-muted mt-3.5 tracking-wide">
+          <p
+            className={`font-mono text-[14px] text-muted mt-4 tracking-wide transition-all duration-700 ease-out ${
+              headlineVisible ? "opacity-100" : "opacity-0"
+            }`}
+            style={{ transitionDelay: "700ms" }}
+          >
             Franca, SP · React/Next.js · Node.js · Python
           </p>
 
-          <p className="text-[16px] leading-[1.65] text-muted max-w-[540px] mt-5">
+          <p
+            className={`text-[16px] leading-[1.65] text-muted max-w-[540px] mt-5 transition-all duration-700 ease-out ${
+              headlineVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-3"
+            }`}
+            style={{ transitionDelay: "900ms" }}
+          >
             Construo interfaces ponta a ponta e, por trás delas, um{" "}
-            <strong className="text-text font-medium">pipeline de RAG próprio</strong> —
-            ingestão, chunking, embeddings e recuperação de contexto. Claude, Cursor e
-            Gemini fazem parte da rotina.
+            <strong className="text-text font-medium">
+              pipeline de RAG próprio
+            </strong>{" "}
+            — ingestão, chunking, embeddings e recuperação de contexto. Claude,
+            Cursor e Gemini fazem parte da rotina.
           </p>
         </div>
 
         {/* Pipeline Tracker */}
         <div
-          className={`flex items-center mt-10 transition-all duration-600 ease-out ${
+          className={`flex items-center flex-wrap gap-y-2 mt-10 transition-all duration-700 ease-out ${
             trackerVisible
               ? "opacity-100 translate-y-0"
-              : "opacity-0 translate-y-2"
+              : "opacity-0 translate-y-3"
           }`}
         >
-          {TRACKER_ITEMS.map((item, i) => (
-            <div key={item} className="flex items-center">
-              {i > 0 && (
-                <div className="w-[22px] h-px bg-border mx-2.5 shrink-0" />
-              )}
-              <div
-                className={`flex items-center gap-2 font-mono text-[11.5px] tracking-wide whitespace-nowrap ${
-                  item === "generate" ? "text-warm" : "text-muted-dim"
-                }`}
-              >
-                <span
-                  className={`w-1.5 h-1.5 rounded-full shrink-0 ${
-                    item === "generate" ? "bg-warm" : "bg-cool"
+          {TRACKER_ITEMS.map((item, i) => {
+            const isGenerate = item === "generate";
+            const isLit = trackerLit[i];
+            return (
+              <div key={item} className="flex items-center">
+                {i > 0 && (
+                  <div
+                    className={`h-px mx-2.5 shrink-0 transition-all duration-700 ease-out ${
+                      isLit ? "w-[22px] bg-cool/40" : "w-[22px] bg-border"
+                    }`}
+                    style={{ transitionDelay: `${i * 120}ms` }}
+                  />
+                )}
+                <div
+                  className={`flex items-center gap-2 font-mono text-[11.5px] tracking-wide whitespace-nowrap transition-all duration-500 ${
+                    isLit
+                      ? isGenerate
+                        ? "text-warm"
+                        : "text-cool"
+                      : "text-muted-dim"
                   }`}
-                />
-                {item}
+                  style={{ transitionDelay: `${i * 120}ms` }}
+                >
+                  <span
+                    className={`w-[6px] h-[6px] rounded-full shrink-0 transition-all duration-500 ${
+                      isLit
+                        ? isGenerate
+                          ? "bg-warm shadow-[0_0_10px_rgba(242,184,75,0.6)]"
+                          : "bg-cool shadow-[0_0_10px_rgba(94,234,212,0.5)]"
+                        : "bg-muted-dim"
+                    }`}
+                    style={{ transitionDelay: `${i * 120}ms` }}
+                  />
+                  {item}
+                </div>
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
 
         {/* CTAs */}
         <div
-          className={`flex gap-3.5 mt-10 transition-all duration-600 ease-out ${
+          className={`flex flex-wrap gap-3.5 mt-10 transition-all duration-700 ease-out ${
             ctaVisible
               ? "opacity-100 translate-y-0"
-              : "opacity-0 translate-y-2"
+              : "opacity-0 translate-y-3"
           }`}
         >
           <a
             href="https://github.com/RaFaSMK"
             target="_blank"
             rel="noopener noreferrer"
-            className="font-mono text-[12.5px] tracking-wide px-5 py-2.5 rounded-md border border-warm text-warm transition-colors duration-200 hover:bg-warm/[0.08]"
+            className="font-mono text-[12.5px] tracking-wide px-5 py-2.5 rounded-md border border-warm text-warm transition-all duration-200 hover:bg-warm/[0.08] hover:shadow-[0_0_20px_rgba(242,184,75,0.15)]"
           >
             GitHub
           </a>
@@ -176,13 +302,13 @@ export function Hero() {
             href="https://www.linkedin.com/in/rafael-chaves-souza-a856b524b/"
             target="_blank"
             rel="noopener noreferrer"
-            className="font-mono text-[12.5px] tracking-wide px-5 py-2.5 rounded-md border border-border text-text transition-colors duration-200 hover:border-cool hover:text-cool hover:bg-cool/[0.06]"
+            className="font-mono text-[12.5px] tracking-wide px-5 py-2.5 rounded-md border border-border text-text transition-all duration-200 hover:border-cool hover:text-cool hover:bg-cool/[0.06] hover:shadow-[0_0_20px_rgba(94,234,212,0.1)]"
           >
             LinkedIn
           </a>
           <a
             href="mailto:rafael012chavess@gmail.com"
-            className="font-mono text-[12.5px] tracking-wide px-5 py-2.5 rounded-md border border-border text-text transition-colors duration-200 hover:border-cool hover:text-cool hover:bg-cool/[0.06]"
+            className="font-mono text-[12.5px] tracking-wide px-5 py-2.5 rounded-md border border-border text-text transition-all duration-200 hover:border-cool hover:text-cool hover:bg-cool/[0.06] hover:shadow-[0_0_20px_rgba(94,234,212,0.1)]"
           >
             Email
           </a>

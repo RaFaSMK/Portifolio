@@ -1,3 +1,7 @@
+"use client";
+
+import { Reveal } from "@/components/ScrollReveal/ScrollReveal";
+
 const categories = [
   {
     title: "Frontend",
@@ -52,21 +56,24 @@ const categories = [
 export function TechStack() {
   return (
     <section className="py-20 px-[6vw] max-w-6xl mx-auto">
-      <h2 className="font-display font-[560] text-2xl mb-12 text-text">
-        Tecnologias & Ferramentas
-      </h2>
+      <Reveal>
+        <h2 className="font-display font-[560] text-2xl mb-12 text-text">
+          Tecnologias & Ferramentas
+        </h2>
+      </Reveal>
 
       <div className="space-y-10">
-        {categories.map((category) => (
-          <div key={category.title}>
+        {categories.map((category, catIdx) => (
+          <Reveal key={category.title} delay={catIdx * 100}>
             <h3 className="font-mono text-[11px] text-muted-dim mb-4 uppercase tracking-[0.12em]">
               {category.title}
             </h3>
             <div className="flex flex-wrap gap-2.5">
-              {category.techs.map((tech) => (
+              {category.techs.map((tech, techIdx) => (
                 <div
                   key={tech.name}
-                  className="flex items-center gap-2 px-3 py-2 rounded-md border border-border text-text hover:border-cool hover:text-cool transition-colors duration-200 cursor-default"
+                  className="flex items-center gap-2 px-3 py-2 rounded-md border border-border text-text hover:border-cool hover:text-cool transition-all duration-200 cursor-default opacity-0 animate-[fade-in-up_0.4s_ease-out_forwards]"
+                  style={{ animationDelay: `${techIdx * 50}ms` }}
                 >
                   <img
                     src={tech.icon}
@@ -78,7 +85,7 @@ export function TechStack() {
                 </div>
               ))}
             </div>
-          </div>
+          </Reveal>
         ))}
       </div>
     </section>
