@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { ProjectsContent } from "./ProjectsContent";
+import { ProjectCard } from "@/components/ProjectCard/ProjectCard";
 
 export const metadata: Metadata = {
   title: "Projetos",
@@ -13,57 +13,69 @@ const projects = [
     description:
       "API de microserviços com NestJS + MongoDB: Auth Service (JWT/RBAC) e API Service (CRUD de produtos), com observabilidade via Prometheus/Grafana e testes de carga com k6.",
     url: "https://github.com/RaFaSMK/project-products",
-    language: "TypeScript",
-    languageColor: "#3178c6",
-    emoji: "🏗️",
+    stack: ["NestJS", "MongoDB", "JWT", "Prometheus", "Grafana", "k6"],
   },
   {
     name: "RAG",
     description:
       "Pipeline de Retrieval-Augmented Generation em Python: ingestão de documentos, chunking, embeddings, armazenamento vetorial (ChromaDB) e geração de respostas com LLM (Llama 3) via LangChain.",
     url: "https://github.com/RaFaSMK/RAG",
-    language: "Python",
-    languageColor: "#3572A5",
-    emoji: "🔎",
+    stack: ["Python", "LangChain", "ChromaDB", "Ollama", "Llama 3"],
   },
   {
     name: "PI-Equaly",
     description:
       "Plataforma web para conectar Pessoas com Deficiência a vagas de emprego. Back-end com Node.js e PostgreSQL, interface com React/Next.js e Tailwind CSS, orquestrado com Docker.",
     url: "https://github.com/RaFaSMK/PI-Equaly",
-    language: "TypeScript",
-    languageColor: "#3178c6",
-    emoji: "♿",
+    stack: ["Next.js", "Node.js", "PostgreSQL", "Docker", "Tailwind"],
   },
   {
     name: "hustle-tracker",
     description:
       "Aplicativo mobile multiplataforma de gestão de inventário e vendas desenvolvido com React Native, com integração direta a banco de dados em nuvem via GCP/Firebase.",
     url: "https://github.com/RaFaSMK/hustle-tracker",
-    language: "JavaScript",
-    languageColor: "#f1e05a",
-    emoji: "📦",
+    stack: ["React Native", "GCP", "Firebase"],
   },
   {
     name: "n8n-automations",
     description:
       "Workflows de automação de processos com n8n — integração entre serviços, automatização de tarefas repetitivas e orquestração de fluxos de trabalho.",
     url: "https://github.com/RaFaSMK/n8n-automations",
-    language: "JavaScript",
-    languageColor: "#f1e05a",
-    emoji: "⚙️",
+    stack: ["n8n", "JavaScript", "API"],
   },
   {
     name: "mini_pedidos",
     description:
       "Desafio técnico de sistema de pedidos fullstack — desenvolvido como desafio de vaga para a OTicket, demonstrando habilidades em desenvolvimento ponta a ponta.",
     url: "https://github.com/RaFaSMK/mini_pedidos",
-    language: "TypeScript",
-    languageColor: "#3178c6",
-    emoji: "🧾",
+    stack: ["TypeScript", "Node.js", "React"],
   },
 ];
 
 export default function ProjectsPage() {
-  return <ProjectsContent projects={projects} />;
+  return (
+    <>
+      {/* Header */}
+      <section className="pt-16 pb-12 px-[6vw] max-w-6xl mx-auto">
+        <h1 className="font-display font-[560] text-[clamp(2rem,4vw,3rem)] leading-tight tracking-tight mb-4">
+          Projetos
+        </h1>
+        <p className="text-muted text-[15px] max-w-xl">
+          APIs, pipelines de IA, plataformas web e apps mobile — projetos que
+          mostram minha jornada como desenvolvedor.
+        </p>
+      </section>
+
+      <div className="border-t border-border" />
+
+      {/* Grid */}
+      <section className="py-16 px-[6vw] max-w-6xl mx-auto">
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          {projects.map((project) => (
+            <ProjectCard key={project.name} {...project} />
+          ))}
+        </div>
+      </section>
+    </>
+  );
 }

@@ -1,7 +1,3 @@
-"use client";
-
-import { motion } from "framer-motion";
-
 const categories = [
   {
     title: "Frontend",
@@ -54,74 +50,35 @@ const categories = [
 ];
 
 export function TechStack() {
-  const containerVariants = {
-    hidden: { opacity: 0, y: 20 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        duration: 0.5,
-        when: "beforeChildren",
-        staggerChildren: 0.05,
-      },
-    },
-  };
-
-  const itemVariants = {
-    hidden: { opacity: 0, scale: 0.8 },
-    visible: {
-      opacity: 1,
-      scale: 1,
-      transition: { duration: 0.3 },
-    },
-  };
-
   return (
-    <section className="py-20 px-4 sm:px-6 lg:px-8 max-w-6xl mx-auto">
-      <motion.h2
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        className="text-2xl font-bold mb-12 text-center text-foreground"
-      >
+    <section className="py-20 px-[6vw] max-w-6xl mx-auto">
+      <h2 className="font-display font-[560] text-2xl mb-12 text-text">
         Tecnologias & Ferramentas
-      </motion.h2>
+      </h2>
 
       <div className="space-y-10">
         {categories.map((category) => (
-          <motion.div
-            key={category.title}
-            variants={containerVariants}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, margin: "-50px" }}
-          >
-            <h3 className="text-sm font-medium text-muted-foreground mb-4 uppercase tracking-wider">
+          <div key={category.title}>
+            <h3 className="font-mono text-[11px] text-muted-dim mb-4 uppercase tracking-[0.12em]">
               {category.title}
             </h3>
-            <div className="flex flex-wrap gap-3">
+            <div className="flex flex-wrap gap-2.5">
               {category.techs.map((tech) => (
-                <motion.div
+                <div
                   key={tech.name}
-                  variants={itemVariants}
-                  whileHover={{ scale: 1.1, y: -4 }}
-                  className="group flex items-center gap-2 px-3 py-2 rounded-lg bg-card border border-border hover:border-primary/40 transition-colors duration-200 cursor-default"
+                  className="flex items-center gap-2 px-3 py-2 rounded-md border border-border text-text hover:border-cool hover:text-cool transition-colors duration-200 cursor-default"
                 >
-                  {"icon" in tech ? (
-                    <img
-                      src={tech.icon}
-                      alt={tech.name}
-                      className="w-5 h-5 opacity-90 group-hover:opacity-100 transition-opacity"
-                      loading="lazy"
-                    />
-                  ) : null}
-                  <span className="text-sm text-foreground group-hover:text-primary transition-colors duration-200">
-                    {tech.name}
-                  </span>
-                </motion.div>
+                  <img
+                    src={tech.icon}
+                    alt={tech.name}
+                    className="w-4 h-4"
+                    loading="lazy"
+                  />
+                  <span className="text-[13px]">{tech.name}</span>
+                </div>
               ))}
             </div>
-          </motion.div>
+          </div>
         ))}
       </div>
     </section>

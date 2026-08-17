@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rafael Souza — Prototype</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,340;9..144,480;9..144,560&family=Inter:wght@400;500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0b0e14;
+    --surface: #11151d;
+    --text: #eceef1;
+    --muted: #7a8699;
+    --muted-dim: #4c5566;
+    --cool: #5eead4;
+    --warm: #f2b84b;
+    --border: rgba(255,255,255,0.09);
+    --font-display: 'Fraunces', serif;
+    --font-body: 'Inter', sans-serif;
+    --font-mono: 'JetBrains Mono', monospace;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background-color: var(--bg);
+    background-image: radial-gradient(rgba(255,255,255,0.045) 1px, transparent 1px);
+    background-size: 26px 26px;
+    color: var(--text);
+    font-family: var(--font-body);
+    min-height: 100vh;
+  }
+
+  a { color: inherit; text-decoration: none; }
+
+  :focus-visible {
+    outline: 2px solid var(--cool);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+
+  /* ---------- Nav ---------- */
+  .nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 28px 6vw;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .nav-brand {
+    font-family: var(--font-mono);
+    font-size: 13px;
+    color: var(--muted);
+    letter-spacing: 0.05em;
+  }
+
+  .nav-brand span { color: var(--cool); }
+
+  .nav-links {
+    display: flex;
+    gap: 36px;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  .nav-links a {
+    color: var(--muted);
+    padding-bottom: 4px;
+    border-bottom: 1px solid transparent;
+    transition: color 0.2s ease, border-color 0.2s ease;
+  }
+
+  .nav-links a:hover,
+  .nav-links a.active {
+    color: var(--text);
+    border-color: var(--cool);
+  }
+
+  /* ---------- Hero ---------- */
+  .hero {
+    min-height: calc(100vh - 78px);
+    display: flex;
+    align-items: center;
+    padding: 6vw;
+  }
+
+  .hero-inner {
+    max-width: 720px;
+  }
+
+  /* live log */
+  .log {
+    font-family: var(--font-mono);
+    font-size: 13px;
+    min-height: 128px;
+    margin-bottom: 28px;
+  }
+
+  .log-line {
+    display: flex;
+    gap: 10px;
+    color: var(--muted-dim);
+    line-height: 1.9;
+    opacity: 0;
+    transform: translateY(4px);
+    transition: opacity 0.4s ease, transform 0.4s ease, color 0.4s ease;
+  }
+
+  .log-line.show { opacity: 1; transform: translateY(0); }
+  .log-line.active { color: var(--cool); }
+  .log-line.done { color: var(--muted); }
+
+  .log-line .stage {
+    width: 78px;
+    flex-shrink: 0;
+  }
+
+  .log-line .detail { color: inherit; }
+
+  .cursor {
+    display: inline-block;
+    width: 7px;
+    height: 14px;
+    background: var(--warm);
+    margin-left: 2px;
+    animation: blink 1s step-start infinite;
+    vertical-align: -2px;
+  }
+
+  .cursor.hidden { display: none; }
+
+  @keyframes blink { 50% { opacity: 0; } }
+
+  /* headline */
+  .headline-block {
+    opacity: 0;
+    transform: translateY(10px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+
+  .headline-block.show { opacity: 1; transform: translateY(0); }
+
+  h1 {
+    font-family: var(--font-display);
+    font-optical-sizing: auto;
+    font-weight: 560;
+    font-size: clamp(2.6rem, 6vw, 4.4rem);
+    line-height: 1.03;
+    letter-spacing: -0.01em;
+  }
+
+  h1 em {
+    font-style: normal;
+    color: var(--cool);
+  }
+
+  .role {
+    font-family: var(--font-mono);
+    font-size: 14px;
+    color: var(--muted);
+    margin-top: 14px;
+    letter-spacing: 0.03em;
+  }
+
+  .lede {
+    font-family: var(--font-body);
+    font-size: 16px;
+    line-height: 1.65;
+    color: var(--muted);
+    max-width: 540px;
+    margin-top: 22px;
+  }
+
+  .lede strong { color: var(--text); font-weight: 500; }
+
+  /* pipeline tracker */
+  .tracker {
+    display: flex;
+    align-items: center;
+    margin-top: 40px;
+    opacity: 0;
+    transform: translateY(8px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+
+  .tracker.show { opacity: 1; transform: translateY(0); }
+
+  .tracker-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--font-mono);
+    font-size: 11.5px;
+    letter-spacing: 0.04em;
+    color: var(--muted-dim);
+    white-space: nowrap;
+  }
+
+  .tracker-item .dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--cool);
+    flex-shrink: 0;
+  }
+
+  .tracker-item:last-child .dot { background: var(--warm); }
+  .tracker-item:last-child { color: var(--warm); }
+
+  .tracker-line {
+    width: 22px;
+    height: 1px;
+    background: var(--border);
+    margin: 0 10px;
+    flex-shrink: 0;
+  }
+
+  /* CTAs */
+  .cta-row {
+    display: flex;
+    gap: 14px;
+    margin-top: 40px;
+    opacity: 0;
+    transform: translateY(8px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+
+  .cta-row.show { opacity: 1; transform: translateY(0); }
+
+  .btn {
+    font-family: var(--font-mono);
+    font-size: 12.5px;
+    letter-spacing: 0.04em;
+    padding: 11px 20px;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    color: var(--text);
+    transition: border-color 0.2s ease, color 0.2s ease, background 0.2s ease;
+  }
+
+  .btn:hover {
+    border-color: var(--cool);
+    color: var(--cool);
+    background: rgba(94,234,212,0.06);
+  }
+
+  .btn.primary {
+    border-color: var(--warm);
+    color: var(--warm);
+  }
+
+  .btn.primary:hover {
+    background: rgba(242,184,75,0.08);
+  }
+
+  /* ---------- Mobile ---------- */
+  @media (max-width: 680px) {
+    .nav { padding: 20px 6vw; }
+    .nav-links { gap: 20px; font-size: 11px; }
+    .log-line .stage { width: 62px; }
+    .tracker { overflow-x: auto; padding-bottom: 4px; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .log-line, .headline-block, .tracker, .cta-row, .cursor {
+      transition: none !important;
+      animation: none !important;
+    }
+  }
+</style>
+</head>
+<body>
+
+  <nav class="nav">
+    <div class="nav-brand">rafael<span>.</span>souza</div>
+    <div class="nav-links">
+      <a href="#" class="active">Home</a>
+      <a href="#">Projetos</a>
+      <a href="#">Sobre</a>
+    </div>
+  </nav>
+
+  <section class="hero">
+    <div class="hero-inner">
+
+      <div class="log" id="log" aria-live="polite">
+        <div class="log-line" data-stage="ingest"><span class="stage">01 ingest</span><span class="detail">rafael.md</span></div>
+        <div class="log-line" data-stage="chunk"><span class="stage">02 chunk</span><span class="detail">12 segmentos</span></div>
+        <div class="log-line" data-stage="embed"><span class="stage">03 embed</span><span class="detail">vector space</span></div>
+        <div class="log-line" data-stage="retrieve"><span class="stage">04 retrieve</span><span class="detail">top-k context</span></div>
+        <div class="log-line" data-stage="generate"><span class="stage">05 generate</span><span class="detail">resposta pronta<span class="cursor" id="cursor"></span></span></div>
+      </div>
+
+      <div class="headline-block" id="headline-block">
+        <h1>Rafael Souza —<br><em>dev fullstack</em>, JS &amp; IA generativa.</h1>
+        <div class="role">Franca, SP · React/Next.js · Node.js · Python</div>
+        <p class="lede">Construo interfaces ponta a ponta e, por trás delas, um <strong>pipeline de RAG próprio</strong> — ingestão, chunking, embeddings e recuperação de contexto. Claude, Cursor e Gemini fazem parte da rotina.</p>
+      </div>
+
+      <div class="tracker" id="tracker">
+        <div class="tracker-item"><span class="dot"></span>ingest</div>
+        <div class="tracker-line"></div>
+        <div class="tracker-item"><span class="dot"></span>chunk</div>
+        <div class="tracker-line"></div>
+        <div class="tracker-item"><span class="dot"></span>embed</div>
+        <div class="tracker-line"></div>
+        <div class="tracker-item"><span class="dot"></span>retrieve</div>
+        <div class="tracker-line"></div>
+        <div class="tracker-item"><span class="dot"></span>generate</div>
+      </div>
+
+      <div class="cta-row" id="cta-row">
+        <a class="btn primary" href="https://github.com/RaFaSMK" target="_blank" rel="noopener">GitHub</a>
+        <a class="btn" href="https://www.linkedin.com/in/rafael-chaves-souza-a856b524b/" target="_blank" rel="noopener">LinkedIn</a>
+        <a class="btn" href="mailto:rafael012chavess@gmail.com">Email</a>
+      </div>
+
+    </div>
+  </section>
+
+  <script>
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const lines = document.querySelectorAll('.log-line');
+    const cursor = document.getElementById('cursor');
+    const headline = document.getElementById('headline-block');
+    const tracker = document.getElementById('tracker');
+    const cta = document.getElementById('cta-row');
+
+    function reveal(el, delay) {
+      setTimeout(() => el.classList.add('show'), delay);
+    }
+
+    if (reduced) {
+      lines.forEach(l => l.classList.add('show', 'done'));
+      cursor.classList.add('hidden');
+      headline.classList.add('show');
+      tracker.classList.add('show');
+      cta.classList.add('show');
+    } else {
+      let t = 300;
+      lines.forEach((line, i) => {
+        setTimeout(() => {
+          lines.forEach(l => l.classList.remove('active'));
+          line.classList.add('show', 'active');
+          if (i > 0) lines[i - 1].classList.add('done');
+        }, t);
+        t += 420;
+      });
+
+      setTimeout(() => {
+        cursor.classList.add('hidden');
+        lines[lines.length - 1].classList.add('done');
+      }, t + 500);
+
+      reveal(headline, t + 650);
+      reveal(tracker, t + 1050);
+      reveal(cta, t + 1300);
+    }
+  </script>
+
+</body>
+</html>

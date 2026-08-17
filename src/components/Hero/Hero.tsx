@@ -1,88 +1,192 @@
 "use client";
 
-import Image from "next/image";
-import { motion } from "framer-motion";
-import { PathfinderBackground } from "../PathfinderBackground/PathfinderBackground";
+import { useEffect, useRef, useState } from "react";
+
+const LOG_LINES = [
+  { stage: "01 ingest", detail: "rafael.md" },
+  { stage: "02 chunk", detail: "12 segmentos" },
+  { stage: "03 embed", detail: "vector space" },
+  { stage: "04 retrieve", detail: "top-k context" },
+  { stage: "05 generate", detail: "resposta pronta" },
+];
+
+const TRACKER_ITEMS = ["ingest", "chunk", "embed", "retrieve", "generate"];
 
 export function Hero() {
+  const [lineStates, setLineStates] = useState<Array<"hidden" | "active" | "done">>(
+    LOG_LINES.map(() => "hidden")
+  );
+  const [cursorVisible, setCursorVisible] = useState(true);
+  const [headlineVisible, setHeadlineVisible] = useState(false);
+  const [trackerVisible, setTrackerVisible] = useState(false);
+  const [ctaVisible, setCtaVisible] = useState(false);
+  const reducedMotion = useRef(false);
+
+  useEffect(() => {
+    reducedMotion.current = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    if (reducedMotion.current) {
+      setLineStates(LOG_LINES.map(() => "done"));
+      setCursorVisible(false);
+      setHeadlineVisible(true);
+      setTrackerVisible(true);
+      setCtaVisible(true);
+      return;
+    }
+
+    const timers: ReturnType<typeof setTimeout>[] = [];
+    let t = 300;
+
+    LOG_LINES.forEach((_, i) => {
+      timers.push(
+        setTimeout(() => {
+          setLineStates((prev) => {
+            const next = [...prev];
+            // Previous lines become "done"
+            if (i > 0) next[i - 1] = "done";
+            next[i] = "active";
+            return next;
+          });
+        }, t)
+      );
+      t += 420;
+    });
+
+    // Hide cursor + last line done
+    timers.push(
+      setTimeout(() => {
+        setCursorVisible(false);
+        setLineStates((prev) => {
+          const next = [...prev];
+          next[next.length - 1] = "done";
+          return next;
+        });
+      }, t + 500)
+    );
+
+    // Reveal headline, tracker, CTAs
+    timers.push(setTimeout(() => setHeadlineVisible(true), t + 650));
+    timers.push(setTimeout(() => setTrackerVisible(true), t + 1050));
+    timers.push(setTimeout(() => setCtaVisible(true), t + 1300));
+
+    return () => timers.forEach(clearTimeout);
+  }, []);
+
   return (
-    <section className="relative min-h-[60vh] flex items-center justify-center overflow-hidden">
-      <PathfinderBackground />
+    <section className="min-h-[calc(100dvh-78px)] flex items-center px-[6vw] py-[6vw]">
+      <div className="max-w-[720px]">
+        {/* Pipeline Log */}
+        <div className="font-mono text-[13px] min-h-[128px] mb-7" aria-live="polite">
+          {LOG_LINES.map((line, i) => (
+            <div
+              key={line.stage}
+              className={`flex gap-2.5 leading-[1.9] transition-all duration-400 ease-out ${
+                lineStates[i] === "hidden"
+                  ? "opacity-0 translate-y-1"
+                  : lineStates[i] === "active"
+                  ? "opacity-100 translate-y-0 text-cool"
+                  : "opacity-100 translate-y-0 text-muted"
+              }`}
+            >
+              <span className="w-[78px] shrink-0">{line.stage}</span>
+              <span>
+                {line.detail}
+                {i === LOG_LINES.length - 1 && cursorVisible && (
+                  <span
+                    className="inline-block w-[7px] h-[14px] bg-warm ml-0.5 align-[-2px] animate-[blink_1s_step-start_infinite]"
+                    aria-hidden="true"
+                  />
+                )}
+              </span>
+            </div>
+          ))}
+        </div>
 
-      {/* Gradient overlay for readability */}
-      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-background z-[1]" />
-
-      <div className="relative z-10 text-center px-4">
-        {/* Avatar */}
-        <motion.div
-          initial={{ scale: 0, opacity: 0 }}
-          animate={{ scale: 1, opacity: 1 }}
-          transition={{ duration: 0.5, ease: "backOut" }}
-          className="mb-6"
+        {/* Headline */}
+        <div
+          className={`transition-all duration-700 ease-out ${
+            headlineVisible
+              ? "opacity-100 translate-y-0"
+              : "opacity-0 translate-y-2.5"
+          }`}
         >
-          <Image
-            src="https://github.com/RaFaSMK.png"
-            alt="Rafael Souza"
-            width={120}
-            height={120}
-            className="rounded-full mx-auto ring-4 ring-primary/20 shadow-lg shadow-primary/10"
-            priority
-          />
-        </motion.div>
+          <h1 className="font-display font-[560] text-[clamp(2.6rem,6vw,4.4rem)] leading-[1.03] tracking-tight">
+            Rafael Souza —<br />
+            <em className="not-italic text-cool">dev fullstack</em>, JS &amp; IA generativa.
+          </h1>
 
-        {/* Name */}
-        <motion.h1
-          initial={{ y: 20, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          transition={{ duration: 0.5, delay: 0.2 }}
-          className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight mb-4"
+          <p className="font-mono text-[14px] text-muted mt-3.5 tracking-wide">
+            Franca, SP · React/Next.js · Node.js · Python
+          </p>
+
+          <p className="text-[16px] leading-[1.65] text-muted max-w-[540px] mt-5">
+            Construo interfaces ponta a ponta e, por trás delas, um{" "}
+            <strong className="text-text font-medium">pipeline de RAG próprio</strong> —
+            ingestão, chunking, embeddings e recuperação de contexto. Claude, Cursor e
+            Gemini fazem parte da rotina.
+          </p>
+        </div>
+
+        {/* Pipeline Tracker */}
+        <div
+          className={`flex items-center mt-10 transition-all duration-600 ease-out ${
+            trackerVisible
+              ? "opacity-100 translate-y-0"
+              : "opacity-0 translate-y-2"
+          }`}
         >
-          Olá, eu sou o{" "}
-          <span className="bg-gradient-to-r from-primary via-[#00f2fe] to-[#43e97b] bg-clip-text text-transparent">
-            Rafael
-          </span>
-        </motion.h1>
+          {TRACKER_ITEMS.map((item, i) => (
+            <div key={item} className="flex items-center">
+              {i > 0 && (
+                <div className="w-[22px] h-px bg-border mx-2.5 shrink-0" />
+              )}
+              <div
+                className={`flex items-center gap-2 font-mono text-[11.5px] tracking-wide whitespace-nowrap ${
+                  item === "generate" ? "text-warm" : "text-muted-dim"
+                }`}
+              >
+                <span
+                  className={`w-1.5 h-1.5 rounded-full shrink-0 ${
+                    item === "generate" ? "bg-warm" : "bg-cool"
+                  }`}
+                />
+                {item}
+              </div>
+            </div>
+          ))}
+        </div>
 
-        {/* Subtitle */}
-        <motion.p
-          initial={{ y: 20, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          transition={{ duration: 0.5, delay: 0.4 }}
-          className="text-muted-foreground text-lg sm:text-xl max-w-xl mx-auto mb-8"
-        >
-          Desenvolvedor Fullstack | JavaScript & IA Generativa
-        </motion.p>
-
-        {/* Buttons */}
-        <motion.div
-          initial={{ y: 20, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          transition={{ duration: 0.5, delay: 0.6 }}
-          className="flex items-center justify-center gap-4"
+        {/* CTAs */}
+        <div
+          className={`flex gap-3.5 mt-10 transition-all duration-600 ease-out ${
+            ctaVisible
+              ? "opacity-100 translate-y-0"
+              : "opacity-0 translate-y-2"
+          }`}
         >
           <a
             href="https://github.com/RaFaSMK"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg text-sm font-medium bg-accent/80 text-foreground border border-border hover:bg-accent transition-all duration-300 hover:scale-105"
+            className="font-mono text-[12.5px] tracking-wide px-5 py-2.5 rounded-md border border-warm text-warm transition-colors duration-200 hover:bg-warm/[0.08]"
           >
-            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
-              <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />
-            </svg>
             GitHub
           </a>
           <a
             href="https://www.linkedin.com/in/rafael-chaves-souza-a856b524b/"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg text-sm font-medium bg-[#0077B5]/10 text-[#0077B5] border border-[#0077B5]/25 hover:bg-[#0077B5]/20 transition-all duration-300 hover:scale-105"
+            className="font-mono text-[12.5px] tracking-wide px-5 py-2.5 rounded-md border border-border text-text transition-colors duration-200 hover:border-cool hover:text-cool hover:bg-cool/[0.06]"
           >
-            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
-              <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
-            </svg>
             LinkedIn
           </a>
-        </motion.div>
+          <a
+            href="mailto:rafael012chavess@gmail.com"
+            className="font-mono text-[12.5px] tracking-wide px-5 py-2.5 rounded-md border border-border text-text transition-colors duration-200 hover:border-cool hover:text-cool hover:bg-cool/[0.06]"
+          >
+            Email
+          </a>
+        </div>
       </div>
     </section>
   );
