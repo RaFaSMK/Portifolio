@@ -45,7 +45,7 @@ export function Reveal({
   delay = 0,
   className = "",
 }: {
-  children: ReactNode;
+  children: ReactNode | ((isVisible: boolean) => ReactNode);
   delay?: number;
   className?: string;
 }) {
@@ -61,7 +61,31 @@ export function Reveal({
       } ${className}`}
       style={{ transitionDelay: `${delay}ms` }}
     >
-      {children}
+      {typeof children === "function" ? children(isVisible) : children}
+    </div>
+  );
+}
+
+import { VectorText } from "../VectorText/VectorText";
+
+export function RevealVector({
+  text,
+  delay = 0,
+  duration = 1500,
+  className = "",
+}: {
+  text: string;
+  delay?: number;
+  duration?: number;
+  className?: string;
+}) {
+  const { ref, isVisible } = useScrollReveal();
+
+  return (
+    <div ref={ref} className={className}>
+      <VectorText trigger={isVisible} delay={delay} duration={duration}>
+        {text}
+      </VectorText>
     </div>
   );
 }

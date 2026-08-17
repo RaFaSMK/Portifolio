@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { VectorText } from "@/components/VectorText/VectorText";
 
 const LOG_LINES = [
   { stage: "01 ingest", detail: "rafael.md" },
@@ -177,6 +178,7 @@ export function Hero() {
           })}
         </div>
 
+
         {/* Headline */}
         <div
           className={`transition-all duration-[1000ms] ease-out ${
@@ -194,7 +196,7 @@ export function Hero() {
               }`}
               style={{ transitionDelay: "200ms" }}
             >
-              Rafael Souza —
+              <VectorText trigger={headlineVisible} delay={400} duration={1500}>Rafael Souza —</VectorText>
             </span>
             <br />
             <span
@@ -205,8 +207,10 @@ export function Hero() {
               }`}
               style={{ transitionDelay: "500ms" }}
             >
-              <em className="not-italic text-cool">dev fullstack</em>, JS &amp;
-              IA generativa.
+              <em className="not-italic text-cool">
+                <VectorText trigger={headlineVisible} delay={900} duration={1500}>dev fullstack</VectorText>
+              </em>
+              <VectorText trigger={headlineVisible} delay={900} duration={1500}>, JS & IA generativa.</VectorText>
             </span>
           </h1>
 
@@ -216,7 +220,7 @@ export function Hero() {
             }`}
             style={{ transitionDelay: "700ms" }}
           >
-            Franca, SP · React/Next.js · Node.js · Python
+            <VectorText trigger={headlineVisible} delay={1100} duration={1200}>Franca, SP · React/Next.js · Node.js · Python</VectorText>
           </p>
 
           <p

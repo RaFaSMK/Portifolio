@@ -1,6 +1,7 @@
 "use client";
 
 import { Reveal } from "@/components/ScrollReveal/ScrollReveal";
+import { VectorText } from "@/components/VectorText/VectorText";
 
 const categories = [
   {
@@ -57,34 +58,40 @@ export function TechStack() {
   return (
     <section className="py-20 px-[6vw] max-w-6xl mx-auto">
       <Reveal>
-        <h2 className="font-display font-[560] text-2xl mb-12 text-text">
-          Tecnologias & Ferramentas
-        </h2>
+        {(isVisible) => (
+          <h2 className="font-display font-[560] text-2xl mb-12 text-text">
+            <VectorText trigger={isVisible}>Tecnologias & Ferramentas</VectorText>
+          </h2>
+        )}
       </Reveal>
 
       <div className="space-y-10">
         {categories.map((category, catIdx) => (
           <Reveal key={category.title} delay={catIdx * 100}>
-            <h3 className="font-mono text-[11px] text-muted-dim mb-4 uppercase tracking-[0.12em]">
-              {category.title}
-            </h3>
-            <div className="flex flex-wrap gap-2.5">
-              {category.techs.map((tech, techIdx) => (
-                <div
-                  key={tech.name}
-                  className="flex items-center gap-2 px-3 py-2 rounded-md border border-border text-text hover:border-cool hover:text-cool transition-all duration-200 cursor-default opacity-0 animate-[fade-in-up_0.4s_ease-out_forwards]"
-                  style={{ animationDelay: `${techIdx * 50}ms` }}
-                >
-                  <img
-                    src={tech.icon}
-                    alt={tech.name}
-                    className="w-4 h-4"
-                    loading="lazy"
-                  />
-                  <span className="text-[13px]">{tech.name}</span>
+            {(isVisible) => (
+              <>
+                <h3 className="font-mono text-[11px] text-muted-dim mb-4 uppercase tracking-[0.12em]">
+                  <VectorText trigger={isVisible} delay={catIdx * 100}>{category.title}</VectorText>
+                </h3>
+                <div className="flex flex-wrap gap-2.5">
+                  {category.techs.map((tech, techIdx) => (
+                    <div
+                      key={tech.name}
+                      className={`flex items-center gap-2 px-3 py-2 rounded-md border border-border text-text hover:border-cool hover:text-cool transition-all duration-200 cursor-default opacity-0 ${isVisible ? 'animate-[fade-in-up_0.4s_ease-out_forwards]' : ''}`}
+                      style={{ animationDelay: `${techIdx * 50}ms` }}
+                    >
+                      <img
+                        src={tech.icon}
+                        alt={tech.name}
+                        className="w-4 h-4"
+                        loading="lazy"
+                      />
+                      <span className="text-[13px]">{tech.name}</span>
+                    </div>
+                  ))}
                 </div>
-              ))}
-            </div>
+              </>
+            )}
           </Reveal>
         ))}
       </div>

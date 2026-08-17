@@ -1,17 +1,22 @@
 "use client";
 
 import { Reveal } from "@/components/ScrollReveal/ScrollReveal";
+import { VectorText } from "@/components/VectorText/VectorText";
 
 export function ContactSection() {
   return (
     <section className="py-20 px-[6vw] max-w-6xl mx-auto">
       <Reveal>
-        <h2 className="font-display font-[560] text-2xl mb-2 text-text">
-          Contato
-        </h2>
-        <p className="text-muted text-[15px] mb-8">
-          Vamos conversar? Entre em contato por qualquer um dos canais abaixo.
-        </p>
+        {(isVisible) => (
+          <>
+            <h2 className="font-display font-[560] text-2xl mb-2 text-text">
+              <VectorText trigger={isVisible}>Contato</VectorText>
+            </h2>
+            <p className="text-muted text-[15px] mb-8">
+              Vamos conversar? Entre em contato por qualquer um dos canais abaixo.
+            </p>
+          </>
+        )}
       </Reveal>
 
       <div className="flex flex-wrap gap-3">
