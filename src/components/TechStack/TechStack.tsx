@@ -5,7 +5,7 @@ import { VectorText } from "@/components/VectorText/VectorText";
 
 const categories = [
   {
-    title: "Frontend",
+    key: "frontend",
     techs: [
       { name: "HTML", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/html5/html5-original.svg" },
       { name: "CSS", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/css3/css3-original.svg" },
@@ -17,7 +17,7 @@ const categories = [
     ],
   },
   {
-    title: "Backend",
+    key: "backend",
     techs: [
       { name: "Node.js", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/nodejs/nodejs-original.svg" },
       { name: "Express", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/express/express-original.svg" },
@@ -27,7 +27,7 @@ const categories = [
     ],
   },
   {
-    title: "Dados & Infra",
+    key: "dataInfra",
     techs: [
       { name: "PostgreSQL", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/postgresql/postgresql-original.svg" },
       { name: "MongoDB", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/mongodb/mongodb-original.svg" },
@@ -40,7 +40,7 @@ const categories = [
     ],
   },
   {
-    title: "IA Generativa & Automação",
+    key: "aiAutomation",
     techs: [
       { name: "LangChain", icon: "https://api.iconify.design/simple-icons:langchain.svg?color=%231C3C3C" },
       { name: "ChromaDB", icon: "https://api.iconify.design/simple-icons:databricks.svg?color=%23FF6F00" },
@@ -54,24 +54,36 @@ const categories = [
   },
 ];
 
-export function TechStack() {
+interface TechStackProps {
+  dictionary?: {
+    title: string;
+    categories: {
+      frontend: string;
+      backend: string;
+      dataInfra: string;
+      aiAutomation: string;
+    };
+  };
+}
+
+export function TechStack({ dictionary }: TechStackProps) {
   return (
     <section className="py-20 px-[6vw] max-w-6xl mx-auto">
       <Reveal>
         {(isVisible) => (
-          <h2 className="font-display font-[560] text-2xl mb-12 text-text">
-            <VectorText trigger={isVisible}>Tecnologias & Ferramentas</VectorText>
+          <h2 className="font-display font-[560] text-3xl mb-12 text-text">
+            <VectorText trigger={isVisible}>{dictionary?.title || "Tecnologias & Ferramentas"}</VectorText>
           </h2>
         )}
       </Reveal>
 
       <div className="space-y-10">
         {categories.map((category, catIdx) => (
-          <Reveal key={category.title} delay={catIdx * 100}>
+          <Reveal key={category.key} delay={catIdx * 100}>
             {(isVisible) => (
               <>
-                <h3 className="font-mono text-[11px] text-muted-dim mb-4 uppercase tracking-[0.12em]">
-                  <VectorText trigger={isVisible} delay={catIdx * 100}>{category.title}</VectorText>
+                <h3 className="font-mono text-[13px] text-muted-dim mb-4 uppercase tracking-[0.12em]">
+                  <VectorText trigger={isVisible} delay={catIdx * 100}>{dictionary?.categories[category.key as keyof typeof dictionary.categories] || category.key}</VectorText>
                 </h3>
                 <div className="flex flex-wrap gap-2.5">
                   {category.techs.map((tech, techIdx) => (
@@ -86,7 +98,7 @@ export function TechStack() {
                         className="w-4 h-4"
                         loading="lazy"
                       />
-                      <span className="text-[13px]">
+                      <span className="text-[15px]">
                         <VectorText trigger={isVisible} delay={techIdx * 60 + 150}>{tech.name}</VectorText>
                       </span>
                     </div>

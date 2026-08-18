@@ -3,7 +3,20 @@
 import { Reveal } from "@/components/ScrollReveal/ScrollReveal";
 import { VectorText } from "@/components/VectorText/VectorText";
 
-export function AboutSection() {
+interface AboutSectionProps {
+  dictionary?: {
+    title: string;
+    description: string;
+    experienceTitle: string;
+    jobs: {
+      period: string;
+      company: string;
+      role: string;
+    }[];
+  };
+}
+
+export function AboutSection({ dictionary }: AboutSectionProps) {
   return (
     <section className="py-20 px-[6vw] max-w-6xl mx-auto">
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
@@ -11,17 +24,12 @@ export function AboutSection() {
         <Reveal>
           {(isVisible) => (
             <>
-              <h2 className="font-display font-[560] text-2xl mb-4 text-text">
-                <VectorText>Sobre Mim</VectorText>
+              <h2 className="font-display font-[560] text-3xl mb-4 text-text">
+                <VectorText>{dictionary?.title || "Sobre Mim"}</VectorText>
               </h2>
-              <p className="text-muted leading-relaxed text-[15px]">
+              <p className="text-muted leading-relaxed text-[17px]">
                 <VectorText delay={150} duration={2000}>
-                  Estudante do 6º semestre de Engenharia de Software e desenvolvedor Fullstack,
-                  atuando ponta a ponta em interfaces (React/Next.js), APIs REST (Node.js/Express)
-                  e banco de dados. Tenho interesse genuíno em IA generativa — construí um pipeline
-                  de RAG próprio (LangChain, ChromaDB, embeddings e integração com LLMs) com apoio
-                  de ferramentas de IA no fluxo de desenvolvimento. Claude, Cursor e Gemini fazem
-                  parte da minha rotina diária de código.
+                  {dictionary?.description || "Estudante do 6º semestre de Engenharia de Software e desenvolvedor Fullstack, atuando ponta a ponta em interfaces (React/Next.js), APIs REST (Node.js/Express) e banco de dados. Tenho interesse genuíno em IA generativa — construí um pipeline de RAG próprio (LangChain, ChromaDB, embeddings e integração com LLMs) com apoio de ferramentas de IA no fluxo de desenvolvimento. Claude, Cursor e Gemini fazem parte da minha rotina diária de código."}
                 </VectorText>
               </p>
             </>
@@ -32,34 +40,48 @@ export function AboutSection() {
         <Reveal delay={150}>
           {(isVisible) => (
             <>
-              <h2 className="font-display font-[560] text-2xl mb-4 text-text">
-                <VectorText trigger={isVisible} delay={150}>Trabalho & Experiência</VectorText>
+              <h2 className="font-display font-[560] text-3xl mb-4 text-text">
+                <VectorText trigger={isVisible} delay={150}>{dictionary?.experienceTitle || "Trabalho & Experiência"}</VectorText>
               </h2>
               <div className="space-y-1">
-                <ExperienceItem
-                  period="Fev 2026 – Presente"
-                  company="OTicket Gestão de Entretenimentos"
-                  role="Desenvolvedor Fullstack"
-                  delay={0}
-                />
-                <ExperienceItem
-                  period="Out 2025 – Fev 2026"
-                  company="OTicket Gestão de Entretenimentos"
-                  role="Estagiário de Desenvolvimento Fullstack"
-                  delay={80}
-                />
-                <ExperienceItem
-                  period="Mar 2025 – Out 2025"
-                  company="Prefeitura Municipal de Franca"
-                  role="Estagiário de Desenvolvimento Web"
-                  delay={160}
-                />
-                <ExperienceItem
-                  period="Set 2024 – Mar 2025"
-                  company="Prefeitura Municipal de Franca"
-                  role="Estagiário de Help Desk"
-                  delay={240}
-                />
+                {(dictionary?.jobs || []).length > 0 ? (
+                  dictionary!.jobs.map((job, i) => (
+                    <ExperienceItem
+                      key={i}
+                      period={job.period}
+                      company={job.company}
+                      role={job.role}
+                      delay={i * 80}
+                    />
+                  ))
+                ) : (
+                  <>
+                    <ExperienceItem
+                      period="Fev 2026 – Presente"
+                      company="OTicket Gestão de Entretenimentos"
+                      role="Desenvolvedor Fullstack"
+                      delay={0}
+                    />
+                    <ExperienceItem
+                      period="Out 2025 – Fev 2026"
+                      company="OTicket Gestão de Entretenimentos"
+                      role="Estagiário de Desenvolvimento Fullstack"
+                      delay={80}
+                    />
+                    <ExperienceItem
+                      period="Mar 2025 – Out 2025"
+                      company="Prefeitura Municipal de Franca"
+                      role="Estagiário de Desenvolvimento Web"
+                      delay={160}
+                    />
+                    <ExperienceItem
+                      period="Set 2024 – Mar 2025"
+                      company="Prefeitura Municipal de Franca"
+                      role="Estagiário de Help Desk"
+                      delay={240}
+                    />
+                  </>
+                )}
               </div>
             </>
           )}
@@ -89,13 +111,13 @@ function ExperienceItem({
             <div className="w-px flex-1 bg-border min-h-[32px]" />
           </div>
           <div>
-            <span className="font-mono text-[11px] text-muted-dim tracking-wide">
+            <span className="font-mono text-[13px] text-muted-dim tracking-wide">
               <VectorText trigger={isVisible} delay={delay + 100}>{period}</VectorText>
             </span>
-            <p className="text-[14px] font-medium text-text mt-0.5">
+            <p className="text-[16px] font-medium text-text mt-0.5">
               <VectorText trigger={isVisible} delay={delay + 200}>{role}</VectorText>
             </p>
-            <p className="text-[12px] text-muted">
+            <p className="text-[14px] text-muted">
               <VectorText trigger={isVisible} delay={delay + 300}>{company}</VectorText>
             </p>
           </div>

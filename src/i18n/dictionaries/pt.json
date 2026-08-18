@@ -1,0 +1,93 @@
+{
+  "navbar": {
+    "home": "Home",
+    "projects": "Projetos",
+    "about": "Sobre"
+  },
+  "hero": {
+    "log": {
+      "chunkDetail": "12 segmentos",
+      "generateDetail": "resposta pronta"
+    },
+    "headline": {
+      "role1": "dev fullstack",
+      "role2": ", JS & IA generativa.",
+      "location": "Franca, SP · React/Next.js · Node.js · Python",
+      "description1": "Construo interfaces ponta a ponta e, por trás delas, um ",
+      "description2": "pipeline de RAG próprio",
+      "description3": " — ingestão, chunking, embeddings e recuperação de contexto. Claude, Cursor e Gemini fazem parte da rotina."
+    }
+  },
+  "aboutSection": {
+    "title": "Sobre Mim",
+    "description": "Estudante do 6º semestre de Engenharia de Software e desenvolvedor Fullstack, atuando ponta a ponta em interfaces (React/Next.js), APIs REST (Node.js/Express) e banco de dados. Tenho interesse genuíno em IA generativa — construí um pipeline de RAG próprio (LangChain, ChromaDB, embeddings e integração com LLMs) com apoio de ferramentas de IA no fluxo de desenvolvimento. Claude, Cursor e Gemini fazem parte da minha rotina diária de código.",
+    "experienceTitle": "Trabalho & Experiência",
+    "jobs": [
+      {
+        "period": "Fev 2026 – Presente",
+        "company": "OTicket Gestão de Entretenimentos",
+        "role": "Desenvolvedor Fullstack"
+      },
+      {
+        "period": "Out 2025 – Fev 2026",
+        "company": "OTicket Gestão de Entretenimentos",
+        "role": "Estagiário de Desenvolvimento Fullstack"
+      },
+      {
+        "period": "Mar 2025 – Out 2025",
+        "company": "Prefeitura Municipal de Franca",
+        "role": "Estagiário de Desenvolvimento Web"
+      },
+      {
+        "period": "Set 2024 – Mar 2025",
+        "company": "Prefeitura Municipal de Franca",
+        "role": "Estagiário de Help Desk"
+      }
+    ]
+  },
+  "techStack": {
+    "title": "Tecnologias & Ferramentas",
+    "categories": {
+      "frontend": "Frontend",
+      "backend": "Backend",
+      "dataInfra": "Dados & Infra",
+      "aiAutomation": "IA Generativa & Automação"
+    }
+  },
+  "contactSection": {
+    "title": "Contato",
+    "description": "Vamos conversar? Entre em contato por qualquer um dos canais abaixo."
+  },
+  "aboutPage": {
+    "title": "Sobre Mim",
+    "subtitle": "Desenvolvedor fullstack de Franca, SP. Construindo interfaces, APIs e explorando IA generativa.",
+    "bio1": ["Eu sou o ", "Rafael", ", estudante de Engenharia de Software na Uni-FACEF (6º semestre) e desenvolvedor Fullstack na OTicket Gestão de Entretenimentos. Atuo ponta a ponta: desde a construção de interfaces com React e Next.js, passando por APIs REST com Node.js e Express, até a modelagem e manipulação de bancos de dados com PostgreSQL."],
+    "bio2": ["Tenho interesse genuíno em ", "IA generativa", " — construí um pipeline de RAG do zero (LangChain, ChromaDB, embeddings e integração com LLMs como Llama 3). Ferramentas como Claude, Cursor e Gemini fazem parte da minha rotina diária de desenvolvimento, me ajudando a ser mais produtivo e escrever código de maior qualidade."],
+    "bio3": ["Atualmente estou também estudando ", "Python", " de forma ativa, com foco em FastAPI e automações com IA, expandindo meu repertório para além do ecossistema JavaScript. Tenho facilidade para aprender novas tecnologias de forma autônoma e gosto de testar na prática."],
+    "bio4": "Antes da OTicket, passei pela Prefeitura Municipal de Franca, onde comecei como estagiário de Help Desk e evoluí para desenvolvimento web, criando interfaces com Next.js para sistemas internos de urbanismo.",
+    "educationTitle": "Formação Acadêmica",
+    "degree": "Bacharelado em Engenharia de Software",
+    "university": "Uni-FACEF — Período noturno",
+    "term": "6º Semestre",
+    "status": "Em andamento",
+    "certificationsTitle": "Certificações e cursos complementares",
+    "languagesTitle": "Idiomas",
+    "langPt": "Português",
+    "langPtLevel": "Nativo",
+    "langEn": "Inglês",
+    "langEnLevel": "Intermediário"
+  },
+  "projectsPage": {
+    "title": "Projetos",
+    "metaDescription": "Projetos desenvolvidos por Rafael Souza — APIs, pipelines de IA, plataformas web e aplicativos mobile.",
+    "subtitle": "APIs, pipelines de IA, plataformas web e apps mobile — projetos que mostram minha jornada como desenvolvedor.",
+    "projects": {
+      "projectProducts": "API de microserviços com NestJS + MongoDB: Auth Service (JWT/RBAC) e API Service (CRUD de produtos), com observabilidade via Prometheus/Grafana e testes de carga com k6.",
+      "rag": "Pipeline de Retrieval-Augmented Generation em Python: ingestão de documentos, chunking, embeddings, armazenamento vetorial (ChromaDB) e geração de respostas com LLM (Llama 3) via LangChain.",
+      "piEqualy": "Plataforma web para conectar Pessoas com Deficiência a vagas de emprego. Back-end com Node.js e PostgreSQL, interface com React/Next.js e Tailwind CSS, orquestrado com Docker.",
+      "hustleTracker": "Aplicativo mobile multiplataforma de gestão de inventário e vendas desenvolvido com React Native, com integração direta a banco de dados em nuvem via GCP/Firebase.",
+      "n8nAutomations": "Workflows de automação de processos com n8n — integração entre serviços, automatização de tarefas repetitivas e orquestração de fluxos de trabalho.",
+      "miniPedidos": "Desafio técnico de sistema de pedidos fullstack — desenvolvido como desafio de vaga para a OTicket, demonstrando habilidades em desenvolvimento ponta a ponta."
+    }
+  }
+}

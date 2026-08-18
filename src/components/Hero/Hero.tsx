@@ -15,9 +15,33 @@ const TRACKER_ITEMS = ["ingest", "chunk", "embed", "retrieve", "generate"];
 
 type LineState = "hidden" | "loading" | "active" | "done";
 
-export function Hero() {
+interface HeroProps {
+  dictionary?: {
+    log: {
+      chunkDetail: string;
+      generateDetail: string;
+    };
+    headline: {
+      role1: string;
+      role2: string;
+      location: string;
+      description1: string;
+      description2: string;
+      description3: string;
+    };
+  };
+}
+
+export function Hero({ dictionary }: HeroProps) {
+  const logLines = [
+    { stage: "01 ingest", detail: "rafael.md" },
+    { stage: "02 chunk", detail: dictionary?.log.chunkDetail || "12 segmentos" },
+    { stage: "03 embed", detail: "vector space" },
+    { stage: "04 retrieve", detail: "top-k context" },
+    { stage: "05 generate", detail: dictionary?.log.generateDetail || "resposta pronta" },
+  ];
   const [lineStates, setLineStates] = useState<LineState[]>(
-    LOG_LINES.map(() => "hidden")
+    logLines.map(() => "hidden")
   );
   const [trackerLit, setTrackerLit] = useState<boolean[]>(
     TRACKER_ITEMS.map(() => false)
@@ -34,7 +58,7 @@ export function Hero() {
     ).matches;
 
     if (reducedMotion.current) {
-      setLineStates(LOG_LINES.map(() => "done"));
+      setLineStates(logLines.map(() => "done"));
       setTrackerLit(TRACKER_ITEMS.map(() => true));
       setCursorVisible(false);
       setHeadlineVisible(true);
@@ -46,7 +70,7 @@ export function Hero() {
     const timers: ReturnType<typeof setTimeout>[] = [];
     let t = 240; // Start delay
 
-    LOG_LINES.forEach((_, i) => {
+    logLines.forEach((_, i) => {
       // Show line in "loading" state (spinner spinning)
       timers.push(
         setTimeout(() => {
@@ -60,7 +84,7 @@ export function Hero() {
       );
 
       // After "processing", switch to "active" (check mark appears)
-      const processingTime = i === LOG_LINES.length - 1 ? 510 : 240 + Math.random() * 120;
+      const processingTime = i === logLines.length - 1 ? 510 : 240 + Math.random() * 120;
       timers.push(
         setTimeout(() => {
           setLineStates((prev) => {
@@ -113,12 +137,12 @@ export function Hero() {
       <div className="relative max-w-[720px] w-full">
         {/* Pipeline Log */}
         <div
-          className="font-mono text-[13px] min-h-[160px] mb-8"
+          className="font-mono text-[15px] min-h-[160px] mb-8"
           role="log"
           aria-live="polite"
           aria-label="Pipeline RAG em execução"
         >
-          {LOG_LINES.map((line, i) => {
+          {logLines.map((line, i) => {
             const state = lineStates[i];
             return (
               <div
@@ -161,7 +185,7 @@ export function Hero() {
                   ) : (
                     line.detail
                   )}
-                  {i === LOG_LINES.length - 1 && cursorVisible && state !== "loading" && (
+                  {i === logLines.length - 1 && cursorVisible && state !== "loading" && (
                     <span
                       className="inline-block w-[7px] h-[14px] bg-warm ml-1 align-[-2px] animate-[blink_1s_step-start_infinite]"
                       aria-hidden="true"
@@ -208,32 +232,32 @@ export function Hero() {
               style={{ transitionDelay: "500ms" }}
             >
               <em className="not-italic text-cool">
-                <VectorText trigger={headlineVisible} delay={900} duration={1500} hideCursor>dev fullstack</VectorText>
+                <VectorText trigger={headlineVisible} delay={900} duration={1500} hideCursor>{dictionary?.headline.role1 || "dev fullstack"}</VectorText>
               </em>
-              <VectorText trigger={headlineVisible} delay={900} duration={1500}>, JS & IA generativa.</VectorText>
+              <VectorText trigger={headlineVisible} delay={900} duration={1500}>{dictionary?.headline.role2 || ", JS & IA generativa."}</VectorText>
             </span>
           </h1>
 
           <p
-            className={`font-mono text-[14px] text-muted mt-4 tracking-wide transition-all duration-700 ease-out ${
+            className={`font-mono text-[16px] text-muted mt-4 tracking-wide transition-all duration-700 ease-out ${
               headlineVisible ? "opacity-100" : "opacity-0"
             }`}
             style={{ transitionDelay: "700ms" }}
           >
-            <VectorText trigger={headlineVisible} delay={1100} duration={1200}>Franca, SP · React/Next.js · Node.js · Python</VectorText>
+            <VectorText trigger={headlineVisible} delay={1100} duration={1200}>{dictionary?.headline.location || "Franca, SP · React/Next.js · Node.js · Python"}</VectorText>
           </p>
 
           <p
-            className={`text-[16px] leading-[1.65] text-muted max-w-[540px] mt-5 transition-all duration-700 ease-out ${
+            className={`text-[18px] leading-[1.65] text-muted max-w-[540px] mt-5 transition-all duration-700 ease-out ${
               headlineVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-3"
             }`}
             style={{ transitionDelay: "900ms" }}
           >
-            <VectorText trigger={headlineVisible} delay={1300} duration={1500} hideCursor>Construo interfaces ponta a ponta e, por trás delas, um </VectorText>
+            <VectorText trigger={headlineVisible} delay={1300} duration={1500} hideCursor>{dictionary?.headline.description1 || "Construo interfaces ponta a ponta e, por trás delas, um "}</VectorText>
             <strong className="text-text font-medium">
-              <VectorText trigger={headlineVisible} delay={1300} duration={1500} hideCursor>pipeline de RAG próprio</VectorText>
+              <VectorText trigger={headlineVisible} delay={1300} duration={1500} hideCursor>{dictionary?.headline.description2 || "pipeline de RAG próprio"}</VectorText>
             </strong>{" "}
-            <VectorText trigger={headlineVisible} delay={1300} duration={1500}>— ingestão, chunking, embeddings e recuperação de contexto. Claude, Cursor e Gemini fazem parte da rotina.</VectorText>
+            <VectorText trigger={headlineVisible} delay={1300} duration={1500}>{dictionary?.headline.description3 || " — ingestão, chunking, embeddings e recuperação de contexto. Claude, Cursor e Gemini fazem parte da rotina."}</VectorText>
           </p>
         </div>
 
@@ -259,7 +283,7 @@ export function Hero() {
                   />
                 )}
                 <div
-                  className={`flex items-center gap-2 font-mono text-[11.5px] tracking-wide whitespace-nowrap transition-all duration-500 ${
+                  className={`flex items-center gap-2 font-mono text-[13.5px] tracking-wide whitespace-nowrap transition-all duration-500 ${
                     isLit
                       ? isGenerate
                         ? "text-warm"
@@ -297,7 +321,7 @@ export function Hero() {
             href="https://github.com/RaFaSMK"
             target="_blank"
             rel="noopener noreferrer"
-            className="font-mono text-[12.5px] tracking-wide px-5 py-2.5 rounded-md border border-warm text-warm transition-all duration-200 hover:bg-warm/[0.08] hover:shadow-[0_0_20px_rgba(242,184,75,0.15)]"
+            className="font-mono text-[14.5px] tracking-wide px-5 py-2.5 rounded-md border border-warm text-warm transition-all duration-200 hover:bg-warm/[0.08] hover:shadow-[0_0_20px_rgba(242,184,75,0.15)]"
           >
             <VectorText trigger={ctaVisible} delay={100}>GitHub</VectorText>
           </a>
@@ -305,13 +329,13 @@ export function Hero() {
             href="https://www.linkedin.com/in/rafael-chaves-souza-a856b524b/"
             target="_blank"
             rel="noopener noreferrer"
-            className="font-mono text-[12.5px] tracking-wide px-5 py-2.5 rounded-md border border-border text-text transition-all duration-200 hover:border-cool hover:text-cool hover:bg-cool/[0.06] hover:shadow-[0_0_20px_rgba(94,234,212,0.1)]"
+            className="font-mono text-[14.5px] tracking-wide px-5 py-2.5 rounded-md border border-border text-text transition-all duration-200 hover:border-cool hover:text-cool hover:bg-cool/[0.06] hover:shadow-[0_0_20px_rgba(94,234,212,0.1)]"
           >
             <VectorText trigger={ctaVisible} delay={200}>LinkedIn</VectorText>
           </a>
           <a
             href="mailto:rafael012chavess@gmail.com"
-            className="font-mono text-[12.5px] tracking-wide px-5 py-2.5 rounded-md border border-border text-text transition-all duration-200 hover:border-cool hover:text-cool hover:bg-cool/[0.06] hover:shadow-[0_0_20px_rgba(94,234,212,0.1)]"
+            className="font-mono text-[14.5px] tracking-wide px-5 py-2.5 rounded-md border border-border text-text transition-all duration-200 hover:border-cool hover:text-cool hover:bg-cool/[0.06] hover:shadow-[0_0_20px_rgba(94,234,212,0.1)]"
           >
             <VectorText trigger={ctaVisible} delay={300}>Email</VectorText>
           </a>

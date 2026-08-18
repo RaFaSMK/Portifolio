@@ -1,0 +1,93 @@
+{
+  "navbar": {
+    "home": "Home",
+    "projects": "Projects",
+    "about": "About"
+  },
+  "hero": {
+    "log": {
+      "chunkDetail": "12 segments",
+      "generateDetail": "ready response"
+    },
+    "headline": {
+      "role1": "fullstack dev",
+      "role2": ", JS & generative AI.",
+      "location": "Franca, SP · React/Next.js · Node.js · Python",
+      "description1": "I build end-to-end interfaces and, behind them, a ",
+      "description2": "custom RAG pipeline",
+      "description3": " — ingestion, chunking, embeddings, and context retrieval. Claude, Cursor, and Gemini are part of the routine."
+    }
+  },
+  "aboutSection": {
+    "title": "About Me",
+    "description": "6th-semester Software Engineering student and Fullstack developer, working end-to-end on interfaces (React/Next.js), REST APIs (Node.js/Express) and databases. I have a genuine interest in generative AI — I built my own RAG pipeline (LangChain, ChromaDB, embeddings and LLM integration) supported by AI tools in the development workflow. Claude, Cursor and Gemini are part of my daily coding routine.",
+    "experienceTitle": "Work & Experience",
+    "jobs": [
+      {
+        "period": "Feb 2026 – Present",
+        "company": "OTicket Gestão de Entretenimentos",
+        "role": "Fullstack Developer"
+      },
+      {
+        "period": "Oct 2025 – Feb 2026",
+        "company": "OTicket Gestão de Entretenimentos",
+        "role": "Fullstack Development Intern"
+      },
+      {
+        "period": "Mar 2025 – Oct 2025",
+        "company": "Prefeitura Municipal de Franca",
+        "role": "Web Development Intern"
+      },
+      {
+        "period": "Sep 2024 – Mar 2025",
+        "company": "Prefeitura Municipal de Franca",
+        "role": "Help Desk Intern"
+      }
+    ]
+  },
+  "techStack": {
+    "title": "Technologies & Tools",
+    "categories": {
+      "frontend": "Frontend",
+      "backend": "Backend",
+      "dataInfra": "Data & Infra",
+      "aiAutomation": "Generative AI & Automation"
+    }
+  },
+  "contactSection": {
+    "title": "Contact",
+    "description": "Shall we talk? Get in touch through any of the channels below."
+  },
+  "aboutPage": {
+    "title": "About Me",
+    "subtitle": "Fullstack developer from Franca, SP. Building interfaces, APIs, and exploring generative AI.",
+    "bio1": ["I am ", "Rafael", ", a 6th-semester Software Engineering student at Uni-FACEF and Fullstack developer at OTicket Gestão de Entretenimentos. I work end-to-end: from building interfaces with React and Next.js, through REST APIs with Node.js and Express, to database modeling and manipulation with PostgreSQL."],
+    "bio2": ["I have a genuine interest in ", "generative AI", " — I built a RAG pipeline from scratch (LangChain, ChromaDB, embeddings, and integration with LLMs like Llama 3). Tools like Claude, Cursor, and Gemini are part of my daily development routine, helping me to be more productive and write higher quality code."],
+    "bio3": ["I am currently also actively studying ", "Python", ", focusing on FastAPI and AI automations, expanding my repertoire beyond the JavaScript ecosystem. I have a knack for learning new technologies autonomously and enjoy practical hands-on testing."],
+    "bio4": "Before OTicket, I worked at the Prefeitura Municipal de Franca, where I started as a Help Desk intern and evolved into web development, creating Next.js interfaces for internal urban planning systems.",
+    "educationTitle": "Education",
+    "degree": "Bachelor's Degree in Software Engineering",
+    "university": "Uni-FACEF — Night classes",
+    "term": "6th Semester",
+    "status": "In progress",
+    "certificationsTitle": "Certifications and extra courses",
+    "languagesTitle": "Languages",
+    "langPt": "Portuguese",
+    "langPtLevel": "Native",
+    "langEn": "English",
+    "langEnLevel": "Intermediate"
+  },
+  "projectsPage": {
+    "title": "Projects",
+    "metaDescription": "Projects developed by Rafael Souza — APIs, AI pipelines, web platforms, and mobile applications.",
+    "subtitle": "APIs, AI pipelines, web platforms, and mobile apps — projects that showcase my journey as a developer.",
+    "projects": {
+      "projectProducts": "Microservices API with NestJS + MongoDB: Auth Service (JWT/RBAC) and API Service (product CRUD), with observability via Prometheus/Grafana and load testing with k6.",
+      "rag": "Retrieval-Augmented Generation pipeline in Python: document ingestion, chunking, embeddings, vector storage (ChromaDB), and answer generation with LLM (Llama 3) via LangChain.",
+      "piEqualy": "Web platform to connect People with Disabilities to job vacancies. Backend with Node.js and PostgreSQL, interface with React/Next.js and Tailwind CSS, orchestrated with Docker.",
+      "hustleTracker": "Cross-platform mobile application for inventory and sales management developed with React Native, with direct integration to a cloud database via GCP/Firebase.",
+      "n8nAutomations": "Process automation workflows with n8n — service integration, automation of repetitive tasks, and workflow orchestration.",
+      "miniPedidos": "Fullstack order system technical challenge — developed as a job application challenge for OTicket, demonstrating end-to-end development skills."
+    }
+  }
+}

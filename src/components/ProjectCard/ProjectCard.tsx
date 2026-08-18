@@ -16,7 +16,7 @@ export function ProjectCard({ name, description, url, stack }: ProjectCardProps)
       className="group block rounded-lg border border-border p-5 transition-colors duration-200 hover:border-cool"
     >
       <div className="flex items-start justify-between gap-3 mb-3">
-        <h3 className="font-medium text-[15px] text-text group-hover:text-cool transition-colors duration-200">
+        <h3 className="font-medium text-[17px] text-text group-hover:text-cool transition-colors duration-200">
           <VectorText duration={1000}>{name}</VectorText>
         </h3>
         <svg
@@ -36,7 +36,7 @@ export function ProjectCard({ name, description, url, stack }: ProjectCardProps)
         </svg>
       </div>
 
-      <p className="text-[13px] text-muted leading-relaxed mb-4 line-clamp-3">
+      <p className="text-[15px] text-muted leading-relaxed mb-4 line-clamp-3">
         <VectorText delay={150} duration={1200}>{description}</VectorText>
       </p>
 
@@ -44,7 +44,7 @@ export function ProjectCard({ name, description, url, stack }: ProjectCardProps)
         {stack.map((tech) => (
           <span
             key={tech}
-            className="font-mono text-[10.5px] tracking-wide text-muted-dim px-2 py-0.5 rounded border border-border"
+            className="font-mono text-[12.5px] tracking-wide text-muted-dim px-2 py-0.5 rounded border border-border"
           >
             {tech}
           </span>
