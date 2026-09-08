@@ -69,16 +69,22 @@ export function AboutSection({ dictionary }: AboutSectionProps) {
                       delay={80}
                     />
                     <ExperienceItem
-                      period="Mar 2025 – Out 2025"
+                      period="Ago 2025 – Out 2025"
                       company="Prefeitura Municipal de Franca"
                       role="Estagiário de Desenvolvimento Web"
                       delay={160}
                     />
                     <ExperienceItem
+                      period="Mar 2025 – Ago 2025"
+                      company="Prefeitura Municipal de Franca"
+                      role="Estagiário de Infraestrutura e Redes"
+                      delay={240}
+                    />
+                    <ExperienceItem
                       period="Set 2024 – Mar 2025"
                       company="Prefeitura Municipal de Franca"
                       role="Estagiário de Help Desk"
-                      delay={240}
+                      delay={320}
                     />
                   </>
                 )}
