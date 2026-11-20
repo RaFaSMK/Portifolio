@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { VectorText } from "@/components/VectorText/VectorText";
+import Link from "next/link";
 
 const LOG_LINES = [
   { stage: "01 ingest", detail: "rafael.md" },
@@ -16,7 +17,10 @@ const TRACKER_ITEMS = ["ingest", "chunk", "embed", "retrieve", "generate"];
 type LineState = "hidden" | "loading" | "active" | "done";
 
 interface HeroProps {
+  lang: string;
   dictionary?: {
+    projectsLabel: string;
+    pipelineLabel: string;
     log: {
       chunkDetail: string;
       generateDetail: string;
@@ -32,7 +36,7 @@ interface HeroProps {
   };
 }
 
-export function Hero({ dictionary }: HeroProps) {
+export function Hero({ dictionary, lang }: HeroProps) {
   const logLines = [
     { stage: "01 ingest", detail: "rafael.md" },
     { stage: "02 chunk", detail: dictionary?.log.chunkDetail || "12 segmentos" },
@@ -140,7 +144,7 @@ export function Hero({ dictionary }: HeroProps) {
           className="font-mono text-[15px] min-h-[160px] mb-8"
           role="log"
           aria-live="polite"
-          aria-label="Pipeline RAG em execução"
+          aria-label={dictionary?.pipelineLabel || "Animação ilustrativa de um pipeline RAG"}
         >
           {logLines.map((line, i) => {
             const state = lineStates[i];
@@ -234,7 +238,7 @@ export function Hero({ dictionary }: HeroProps) {
               <em className="not-italic text-cool">
                 <VectorText trigger={headlineVisible} delay={900} duration={1500} hideCursor>{dictionary?.headline.role1 || "dev fullstack"}</VectorText>
               </em>
-              <VectorText trigger={headlineVisible} delay={900} duration={1500}>{dictionary?.headline.role2 || ", JS & IA generativa."}</VectorText>
+              <VectorText trigger={headlineVisible} delay={900} duration={1500}>{dictionary?.headline.role2 || " com foco em backend."}</VectorText>
             </span>
           </h1>
 
@@ -244,7 +248,7 @@ export function Hero({ dictionary }: HeroProps) {
             }`}
             style={{ transitionDelay: "700ms" }}
           >
-            <VectorText trigger={headlineVisible} delay={1100} duration={1200}>{dictionary?.headline.location || "Franca, SP · React/Next.js · Node.js · Python"}</VectorText>
+            <VectorText trigger={headlineVisible} delay={1100} duration={1200}>{dictionary?.headline.location || "Franca, SP · TypeScript · React/Next.js · Node.js"}</VectorText>
           </p>
 
           <p
@@ -253,11 +257,11 @@ export function Hero({ dictionary }: HeroProps) {
             }`}
             style={{ transitionDelay: "900ms" }}
           >
-            <VectorText trigger={headlineVisible} delay={1300} duration={1500} hideCursor>{dictionary?.headline.description1 || "Construo interfaces ponta a ponta e, por trás delas, um "}</VectorText>
+            <VectorText trigger={headlineVisible} delay={1300} duration={1500} hideCursor>{dictionary?.headline.description1 || "Desenvolvo aplicações web com foco em "}</VectorText>
             <strong className="text-text font-medium">
-              <VectorText trigger={headlineVisible} delay={1300} duration={1500} hideCursor>{dictionary?.headline.description2 || "pipeline de RAG próprio"}</VectorText>
-            </strong>{" "}
-            <VectorText trigger={headlineVisible} delay={1300} duration={1500}>{dictionary?.headline.description3 || " — ingestão, chunking, embeddings e recuperação de contexto. Claude, Cursor e Gemini fazem parte da rotina."}</VectorText>
+              <VectorText trigger={headlineVisible} delay={1300} duration={1500} hideCursor>{dictionary?.headline.description2 || "APIs, integrações e confiabilidade"}</VectorText>
+            </strong>
+            <VectorText trigger={headlineVisible} delay={1300} duration={1500}>{dictionary?.headline.description3 || ". Python e IA aplicada complementam meu repertório em projetos."}</VectorText>
           </p>
         </div>
 
@@ -317,6 +321,12 @@ export function Hero({ dictionary }: HeroProps) {
               : "opacity-0 translate-y-3"
           }`}
         >
+          <Link
+            href={`/${lang}/projects`}
+            className="font-mono text-[14.5px] tracking-wide px-5 py-2.5 rounded-md border border-cool text-cool transition-colors hover:bg-cool/[0.08]"
+          >
+            {dictionary?.projectsLabel || "Ver projetos"}
+          </Link>
           <a
             href="https://github.com/RaFaSMK"
             target="_blank"

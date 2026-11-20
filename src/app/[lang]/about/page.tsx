@@ -129,7 +129,7 @@ export default async function AboutPage({ params }: { params: Promise<{ lang: st
                   <VectorText delay={200} duration={1000}>{t.university}</VectorText>
                 </p>
                 <p className="font-mono text-[13px] text-cool mt-2 tracking-wide">
-                  Fev 2024 – Dez 2027
+                  {t.period}
                 </p>
                 <div className="mt-3 flex items-center gap-2">
                   <span className="font-mono text-[12.5px] px-2 py-0.5 rounded border border-cool/30 text-cool tracking-wide">

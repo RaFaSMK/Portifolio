@@ -31,10 +31,8 @@ const categories = [
     techs: [
       { name: "PostgreSQL", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/postgresql/postgresql-original.svg" },
       { name: "MongoDB", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/mongodb/mongodb-original.svg" },
-      { name: "MySQL", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/mysql/mysql-original.svg" },
       { name: "Docker", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/docker/docker-original.svg" },
       { name: "AWS", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/amazonwebservices/amazonwebservices-plain-wordmark.svg" },
-      { name: "GCP", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/googlecloud/googlecloud-original.svg" },
       { name: "Linux", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/linux/linux-original.svg" },
       { name: "Git", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/git/git-original.svg" },
     ],
@@ -57,6 +55,7 @@ const categories = [
 interface TechStackProps {
   dictionary?: {
     title: string;
+    context: string;
     categories: {
       frontend: string;
       backend: string;
@@ -71,11 +70,12 @@ export function TechStack({ dictionary }: TechStackProps) {
     <section className="py-20 px-[6vw] max-w-6xl mx-auto">
       <Reveal>
         {(isVisible) => (
-          <h2 className="font-display font-[560] text-3xl mb-12 text-text">
+          <h2 className="font-display font-[560] text-3xl mb-3 text-text">
             <VectorText trigger={isVisible}>{dictionary?.title || "Tecnologias & Ferramentas"}</VectorText>
           </h2>
         )}
       </Reveal>
+      <p className="text-base text-muted leading-relaxed max-w-3xl mb-12">{dictionary?.context}</p>
 
       <div className="space-y-10">
         {categories.map((category, catIdx) => (

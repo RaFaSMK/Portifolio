@@ -10,17 +10,19 @@
       "generateDetail": "ready response"
     },
     "headline": {
-      "role1": "fullstack dev",
-      "role2": ", JS & generative AI.",
-      "location": "Franca, SP · React/Next.js · Node.js · Python",
-      "description1": "I build end-to-end interfaces and, behind them, a ",
-      "description2": "custom RAG pipeline",
-      "description3": " — ingestion, chunking, embeddings, and context retrieval. Claude, Cursor, and Gemini are part of the routine."
-    }
+      "role1": "full-stack developer",
+      "role2": " focused on backend.",
+      "location": "Franca, SP · TypeScript · React/Next.js · Node.js",
+      "description1": "I build web applications focused on ",
+      "description2": "APIs, integrations and reliability",
+      "description3": ". At OTicket, I contribute to checkout, payments and asynchronous processing. In my projects, I explore Python and applied AI."
+    },
+    "projectsLabel": "View projects",
+    "pipelineLabel": "Illustrative RAG pipeline animation"
   },
   "aboutSection": {
     "title": "About Me",
-    "description": "6th-semester Software Engineering student and Fullstack developer, working end-to-end on interfaces (React/Next.js), REST APIs (Node.js/Express) and databases. I have a genuine interest in generative AI — I built my own RAG pipeline (LangChain, ChromaDB, embeddings and LLM integration) supported by AI tools in the development workflow. Claude, Cursor and Gemini are part of my daily coding routine.",
+    "description": "Full-stack developer at OTicket and a sixth-semester Software Engineering student at Uni-FACEF. I work with React/Next.js, Node.js/Express and PostgreSQL on checkout, payments, cart recovery and reporting. My contributions include AWS integrations, business-rule tests and log analysis. Projects in Python, NestJS and applied AI complement my professional experience.",
     "experienceTitle": "Work & Experience",
     "jobs": [
       {
@@ -34,9 +36,14 @@
         "role": "Fullstack Development Intern"
       },
       {
-        "period": "Mar 2025 – Oct 2025",
+        "period": "Aug 2025 – Oct 2025",
         "company": "Prefeitura Municipal de Franca",
         "role": "Web Development Intern"
+      },
+      {
+        "period": "Mar 2025 – Aug 2025",
+        "company": "Prefeitura Municipal de Franca",
+        "role": "Infrastructure and Networks Intern"
       },
       {
         "period": "Sep 2024 – Mar 2025",
@@ -52,7 +59,8 @@
       "backend": "Backend",
       "dataInfra": "Data & Infra",
       "aiAutomation": "Generative AI & Automation"
-    }
+    },
+    "context": "Professional use: React/Next.js, Node.js/Express, PostgreSQL and AWS SQS/SES/S3. The other tools also include project practice and development assistance."
   },
   "contactSection": {
     "title": "Contact",
@@ -60,34 +68,74 @@
   },
   "aboutPage": {
     "title": "About Me",
-    "subtitle": "Fullstack developer from Franca, SP. Building interfaces, APIs, and exploring generative AI.",
-    "bio1": ["I am ", "Rafael", ", a 6th-semester Software Engineering student at Uni-FACEF and Fullstack developer at OTicket Gestão de Entretenimentos. I work end-to-end: from building interfaces with React and Next.js, through REST APIs with Node.js and Express, to database modeling and manipulation with PostgreSQL."],
-    "bio2": ["I have a genuine interest in ", "generative AI", " — I built a RAG pipeline from scratch (LangChain, ChromaDB, embeddings, and integration with LLMs like Llama 3). Tools like Claude, Cursor, and Gemini are part of my daily development routine, helping me to be more productive and write higher quality code."],
-    "bio3": ["I am currently also actively studying ", "Python", ", focusing on FastAPI and AI automations, expanding my repertoire beyond the JavaScript ecosystem. I have a knack for learning new technologies autonomously and enjoy practical hands-on testing."],
-    "bio4": "Before OTicket, I worked at the Prefeitura Municipal de Franca, where I started as a Help Desk intern and evolved into web development, creating Next.js interfaces for internal urban planning systems.",
+    "subtitle": "Full-stack and backend development, integrations and applied AI projects.",
+    "bio1": [
+      "I am ",
+      "Rafael",
+      ", a full-stack developer at OTicket and a sixth-semester Software Engineering student at Uni-FACEF. I work with React/Next.js, JavaScript/TypeScript, REST APIs in Node.js/Express and PostgreSQL."
+    ],
+    "bio2": [
+      "At OTicket Play, I contribute to ",
+      "checkout, payments and integrations",
+      ": transactional inventory reservations, concurrent coupon limits, cart recovery with SQS/SES, PIX payments, receipts in S3 and reporting. I also work on business-rule tests and troubleshooting."
+    ],
+    "bio3": [
+      "In personal and academic projects, I explore ",
+      "Python and applied AI",
+      ": RAG with LangChain/ChromaDB, a customer-service agent with tools and an AIoT platform with simulated telemetry. These projects complement my professional web development experience."
+    ],
+    "bio4": "Before OTicket, I worked in Help Desk, Infrastructure and Networks, and Web Development at the City of Franca. During that period, I developed a Python automation for on-call schedules and React/Next.js interfaces for an internal CNAE business-classification system.",
     "educationTitle": "Education",
     "degree": "Bachelor's Degree in Software Engineering",
     "university": "Uni-FACEF — Night classes",
     "term": "6th Semester",
-    "status": "In progress",
+    "status": "In progress · evening classes",
     "certificationsTitle": "Certifications and extra courses",
     "languagesTitle": "Languages",
     "langPt": "Portuguese",
     "langPtLevel": "Native",
     "langEn": "English",
-    "langEnLevel": "Intermediate"
+    "langEnLevel": "Intermediate",
+    "period": "Feb 2024 – Dec 2027 (expected)"
   },
   "projectsPage": {
     "title": "Projects",
-    "metaDescription": "Projects developed by Rafael Souza — APIs, AI pipelines, web platforms, and mobile applications.",
-    "subtitle": "APIs, AI pipelines, web platforms, and mobile apps — projects that showcase my journey as a developer.",
+    "metaDescription": "Rafael Chaves Souza’s projects in TypeScript, APIs, integrations, Python and applied AI, with context and technologies.",
+    "subtitle": "APIs, web applications and applied AI. Each project explains its context, technologies and demonstration limits.",
     "projects": {
-      "projectProducts": "Microservices API with NestJS + MongoDB: Auth Service (JWT/RBAC) and API Service (product CRUD), with observability via Prometheus/Grafana and load testing with k6.",
-      "rag": "Retrieval-Augmented Generation pipeline in Python: document ingestion, chunking, embeddings, vector storage (ChromaDB), and answer generation with LLM (Llama 3) via LangChain.",
-      "piEqualy": "Web platform to connect People with Disabilities to job vacancies. Backend with Node.js and PostgreSQL, interface with React/Next.js and Tailwind CSS, orchestrated with Docker.",
-      "hustleTracker": "Cross-platform mobile application for inventory and sales management developed with React Native, with direct integration to a cloud database via GCP/Firebase.",
-      "n8nAutomations": "Process automation workflows with n8n — service integration, automation of repetitive tasks, and workflow orchestration.",
-      "miniPedidos": "Fullstack order system technical challenge — developed as a job application challenge for OTicket, demonstrating end-to-end development skills."
+      "projectProducts": "Two NestJS/TypeScript services for authentication and products, with MongoDB, JWT/RBAC and Docker. Prometheus/Grafana metrics, k6 load scenarios and authentication regression tests in CI.",
+      "iot": "Academic group project with FastAPI, Vue/TypeScript, MQTT/RabbitMQ and WebSocket. Telemetry, commands, alerts and a local assistant; simulated sensors and regressors evaluated on synthetic data.",
+      "artefact": "Technical-challenge prototype with Python/FastAPI, an API, chat and CLI. Typed tools query a fictional store’s catalog, orders and policies, with sources and documented evaluation.",
+      "gallery": "Full-stack gallery with React/TypeScript and Fastify, albums and photo details. Internal and external API consumption with TanStack Query; local JSON-file persistence.",
+      "rag": "Local Python pipeline with ingestion, chunking, embeddings, ChromaDB retrieval and generation through Ollama/LangChain. Includes a CLI and pytest tests with mocks.",
+      "piEqualy": "Academic group project connecting people with disabilities to job opportunities. Next.js, Express/TypeScript, Prisma and PostgreSQL, with candidate and employer profiles and accessibility features.",
+      "hustleTracker": "Academic inventory and sales app built with Expo/React Native and TypeScript. The current version uses Firestore directly, with real-time updates and exchange rates from an external API.",
+      "n8nAutomations": "Documented web and WhatsApp agent demos with n8n, Groq, Z-API and Google Sheets. The repository contains descriptions and screenshots; public workflow exports are not yet available for reproduction.",
+      "miniPedidos": "Full-stack technical challenge covering customers, products and orders. Express/TypeScript, Next.js, Prisma/PostgreSQL, Docker, API documentation and customer integration tests."
+    },
+    "featuredTitle": "Featured projects",
+    "allProjectsLabel": "All projects",
+    "contexts": {
+      "academic": "Academic project",
+      "group": "Academic group project",
+      "challenge": "Technical challenge",
+      "personal": "Personal project",
+      "demo": "Demo"
+    },
+    "names": {
+      "projectProducts": "Project Products",
+      "iot": "Smart Court AIoT",
+      "artefact": "Customer Service Agent · Artefact",
+      "gallery": "Gallery Plus",
+      "miniPedidos": "Mini Pedidos",
+      "rag": "RAG",
+      "piEqualy": "Equaly",
+      "hustleTracker": "Hustle Tracker",
+      "n8nAutomations": "n8n Automations"
     }
+  },
+  "metadata": {
+    "title": "Rafael Souza — Full-Stack and Backend",
+    "description": "Full-stack developer at OTicket. TypeScript, React/Next.js, Node.js, PostgreSQL and AWS integrations. Python and applied AI projects."
   }
 }
