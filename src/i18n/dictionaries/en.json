@@ -15,14 +15,14 @@
       "location": "Franca, SP · TypeScript · React/Next.js · Node.js",
       "description1": "I build web applications focused on ",
       "description2": "APIs, integrations and reliability",
-      "description3": ". At OTicket, I contribute to checkout, payments and asynchronous processing. In my projects, I explore Python and applied AI."
+      "description3": ". At OTicket, I contribute to web application development and maintenance. In my projects, I explore Python and applied AI."
     },
     "projectsLabel": "View projects",
     "pipelineLabel": "Illustrative RAG pipeline animation"
   },
   "aboutSection": {
     "title": "About Me",
-    "description": "Full-stack developer at OTicket and a sixth-semester Software Engineering student at Uni-FACEF. I work with React/Next.js, Node.js/Express and PostgreSQL on checkout, payments, cart recovery and reporting. My contributions include AWS integrations, business-rule tests and log analysis. Projects in Python, NestJS and applied AI complement my professional experience.",
+    "description": "Full-stack developer at OTicket and a sixth-semester Software Engineering student at Uni-FACEF. I work with React/Next.js, Node.js/Express and PostgreSQL to develop interfaces, APIs and integrations. My work also includes automated tests, log analysis and troubleshooting. Projects in Python, NestJS and applied AI complement my professional experience.",
     "experienceTitle": "Work & Experience",
     "jobs": [
       {
@@ -60,7 +60,7 @@
       "dataInfra": "Data & Infra",
       "aiAutomation": "Generative AI & Automation"
     },
-    "context": "Professional use: React/Next.js, Node.js/Express, PostgreSQL and AWS SQS/SES/S3. The other tools also include project practice and development assistance."
+    "context": "Professional experience with React/Next.js, Node.js/Express and PostgreSQL. The other tools also include project practice and development assistance."
   },
   "contactSection": {
     "title": "Contact",
@@ -75,9 +75,9 @@
       ", a full-stack developer at OTicket and a sixth-semester Software Engineering student at Uni-FACEF. I work with React/Next.js, JavaScript/TypeScript, REST APIs in Node.js/Express and PostgreSQL."
     ],
     "bio2": [
-      "At OTicket Play, I contribute to ",
-      "checkout, payments and integrations",
-      ": transactional inventory reservations, concurrent coupon limits, cart recovery with SQS/SES, PIX payments, receipts in S3 and reporting. I also work on business-rule tests and troubleshooting."
+      "At OTicket, I contribute to ",
+      "web application development and maintenance",
+      ", including interfaces, REST APIs, integrations and administrative features. I also work on automated tests, log analysis and troubleshooting in collaboration with the team."
     ],
     "bio3": [
       "In personal and academic projects, I explore ",
@@ -136,6 +136,6 @@
   },
   "metadata": {
     "title": "Rafael Souza — Full-Stack and Backend",
-    "description": "Full-stack developer at OTicket. TypeScript, React/Next.js, Node.js, PostgreSQL and AWS integrations. Python and applied AI projects."
+    "description": "Full-stack developer at OTicket. TypeScript, React/Next.js, Node.js, PostgreSQL, APIs and integrations. Python and applied AI projects."
   }
 }
